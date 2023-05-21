@@ -104,7 +104,7 @@ const products = [
   export default function Example() {
     const [open, setOpen] = useState(false)
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
     return (
     <>

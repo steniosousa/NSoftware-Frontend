@@ -60,7 +60,7 @@ const pedidos = [
 ]
     return(
     <>
-        <Header title={"Área de Gerência"}/>   
+        <Header/>   
         <div className="grid grid-cols-4 gap-6 p-2">
             <div className="bg-gray-200 p-4">
                 <div className="text-center">
