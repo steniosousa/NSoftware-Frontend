@@ -3,8 +3,8 @@ import Map from "../../components/Map";
 
 export function delivery(){
     return(
-        <div>
-            <Header title="Delivery"/>
+        <div className="min-h-screen">
+            <Header/>
             <Map/>
         </div>
     )

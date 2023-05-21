@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import analitico from './pages/analítico';
 import Order from './pages/order';
 import { delivery } from './pages/delivery';
+import ProductsDetails from './pages/productsDetails';
 
 export default function Router(){
   return (
@@ -21,6 +22,7 @@ export default function Router(){
 
 
         <Route Component={Error} path="/error"/>
+        <Route Component={ProductsDetails} path='/ProductsDetails'/>
       </Routes>
     </BrowserRouter>
   );
