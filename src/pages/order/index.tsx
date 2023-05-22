@@ -36,96 +36,136 @@ function classNames(...classes:any) {
 const products = [
     {
       id: 1,
-      name: 'Earthen Bottle',
-      href: '#',
-      price: '$48',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+      name: 'Pizza de Frango',
+      status: 'Pendente',
+      imageSrc: 'https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg',
       imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
+      observation:"Sem cebola",
+      amount:3,
+      sizes:'G',
     },
     {
       id: 2,
-      name: 'Nomad Tumbler',
+      name: 'Coxinha de franco com queijo',
       href: '#',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+      status: 'Pendente',
+      imageSrc: 'https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg',
       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
+      observation:"Pouco queijo",
+      amount:1,
+      sizes: 'M'
     },
     {
       id: 3,
-      name: 'Focus Paper Refill',
+      name: 'Pastel Misto',
       href: '#',
-      price: '$89',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+      status: 'Preparando',
+      imageSrc: 'https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg',
       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
+      amount:5,
+      sizes: 'M'
     },
     {
       id: 4,
-      name: 'Machined Mechanical Pencil',
+      name: 'Pizza de Calabresa',
       href: '#',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
+      status: 'Pendente',
+      imageSrc: 'https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg',
       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
+      amount:4,
+      sizes: 'P'
     },
     {
         id: 5,
-        name: 'Earthen Bottle',
-        href: '#',
-        price: '$48',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+        name: 'Pizza de Frango',
+        status: 'Pendente',
+        imageSrc: 'https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg',
         imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
       },
       {
         id: 6,
-        name: 'Nomad Tumbler',
+        name: 'Coxinha de franco com queijo',
         href: '#',
-        price: '$35',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+        status: 'Pendente',
+        imageSrc: 'https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg',
         imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
       },
       {
         id: 7,
-        name: 'Focus Paper Refill',
+        name: 'Pastel Misto',
         href: '#',
-        price: '$89',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+        status: 'Preparando',
+        imageSrc: 'https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg',
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
       },
       {
         id: 8,
-        name: 'Machined Mechanical Pencil',
+        name: 'Pizza de Calabresa',
         href: '#',
-        price: '$35',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
+        status: 'Pendente',
+        imageSrc: 'https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg',
         imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      },
-    // More products...
+      }
   ]
   
-  export default function Example() {
+  export default function Order() {
     const [open, setOpen] = useState(false)
-    const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    const [productSelected, setProductSelected] = useState({})
+    const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    
+    const sizes = [
+        { name: 'P', inStock: true },
+        { name: 'M', inStock: true },
+        { name: 'G', inStock: true },
+    ]
+     function showProduct(product:any){
+        setProductSelected(product)
+        setOpen(true)
+    }
+    sizes.forEach(size => {
+        if (size.name === productSelected.sizes) {
+          size.inStock = false; 
+         
+        }
+      });
+    
+    function assume(){
+        productSelected.status="Preparando"
+        setOpen(false)
+    }
 
+    function Concluir(){
+        productSelected.status="Concluído"
+        setOpen(false)
+    }
     return (
     <>
     <Header/>
       <div className="bg-white-10">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
-  
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+
+          <div className="grid grid-cols-1 gap-x-6  gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ">
             {products.map((product) => (
-                <div  className="group" onClick={()=>setOpen(true)}>
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                 
+                <div  key={product.id}className="group" onClick={() => showProduct(product)} >
+                <div className="aspect-h-1 aspect-w-1  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
                     src={product.imageSrc}
                     alt={product.imageAlt}
-                    className="h-full w-full object-cover object-center group-hover:opacity-75"
+                    className="max-h-60 h-60 w-full object-cover object-center group-hover:opacity-75"
                     />
                 </div>
                 <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+                {product.status == 'Preparando'?(
+                    <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500">{product.status}</p>
+                ):product.status == 'Concluído'?(
+                    <p className="mt-1 text-sm font-medium text-gray-900 text-lime-400	 ">{product.status}</p>
+                ):(
+                    <p className="mt-1 text-sm font-medium text-gray-900  text-blue-800 ">{product.status}</p>
+                   
+                )}
+                
+                
               </div>
             ))}
           </div>
@@ -169,38 +209,28 @@ const products = [
 
                   <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                     <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                      <img src={product.imageSrc} alt={product.imageAlt} className="object-cover object-center" />
+                      <img src={productSelected.imageSrc} alt={productSelected.imageAlt} className="object-cover object-center" />
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
-                      <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{product.name}</h2>
+                      <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{productSelected.name}</h2>
 
                       <section aria-labelledby="information-heading" className="mt-2">
-                        <h3 id="information-heading" className="sr-only">
-                          Product information
-                        </h3>
-
-                        <p className="text-2xl text-gray-900">{product.price}</p>
-
                         {/* Reviews */}
                         <div className="mt-6">
                           <h4 className="sr-only">Reviews</h4>
                           <div className="flex items-center">
                             <div className="flex items-center">
-                              {[0, 1, 2, 3, 4].map((rating) => (
-                                <StarIcon
-                                  key={rating}
-                                  className={classNames(
-                                    product.rating > rating ? 'text-gray-900' : 'text-gray-200',
-                                    'h-5 w-5 flex-shrink-0'
-                                  )}
-                                  aria-hidden="true"
-                                />
-                              ))}
+                                {[0, 1, 2, 3, 4].map((rating) => (
+                                    <StarIcon
+                                    key={rating}
+                                    className={classNames(
+                                        product.rating > rating ? 'text-gray-900' : 'text-gray-200',
+                                        'h-5 w-5 flex-shrink-0'
+                                    )}
+                                    aria-hidden="true"
+                                    />
+                                ))}
                             </div>
-                            <p className="sr-only">{product.rating} out of 5 stars</p>
-                            <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                              {product.reviewCount} reviews
-                            </a>
                           </div>
                         </div>
                       </section>
@@ -210,47 +240,17 @@ const products = [
                           Product options
                         </h3>
 
-                        <form>
-                          {/* Colors */}
                           <div>
-                            <h4 className="text-sm font-medium text-gray-900">Color</h4>
-
-                            <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
-                              <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-                              <span className="flex items-center space-x-3">
-                                {product.colors.map((color) => (
-                                  <RadioGroup.Option
-                                    key={color.name}
-                                    value={color}
-                                    className={({ active, checked }) =>
-                                      classNames(
-                                        color.selectedClass,
-                                        active && checked ? 'ring ring-offset-1' : '',
-                                        !active && checked ? 'ring-2' : '',
-                                        'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
-                                      )
-                                    }
-                                  >
-                                    <RadioGroup.Label as="span" className="sr-only">
-                                      {color.name}
-                                    </RadioGroup.Label>
-                                    <span
-                                      aria-hidden="true"
-                                      className={classNames(
-                                        color.class,
-                                        'h-8 w-8 rounded-full border border-black border-opacity-10'
-                                      )}
-                                    />
-                                  </RadioGroup.Option>
-                                ))}
-                              </span>
-                            </RadioGroup>
+                            <h4 className="text-sm font-medium text-gray-900">Observação:</h4>
+                            <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                              {productSelected.observation} 
+                            </p>
                           </div>
 
                           {/* Sizes */}
                           <div className="mt-10">
                             <div className="flex items-center justify-between">
-                              <h4 className="text-sm font-medium text-gray-900">Size</h4>
+                              <h4 className="text-sm font-medium text-gray-900">Tamanho</h4>
                               <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                                 Size guide
                               </a>
@@ -259,7 +259,7 @@ const products = [
                             <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                               <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                               <div className="grid grid-cols-4 gap-4">
-                                {product.sizes.map((size) => (
+                                {sizes.map((size) => (
                                   <RadioGroup.Option
                                     key={size.name}
                                     value={size}
@@ -284,11 +284,11 @@ const products = [
                                               checked ? 'border-indigo-500' : 'border-transparent',
                                               'pointer-events-none absolute -inset-px rounded-md'
                                             )}
-                                            aria-hidden="true"
+                                            aria-hidden="false"
                                           />
                                         ) : (
                                           <span
-                                            aria-hidden="true"
+                                            aria-hidden="false"
                                             className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
                                           >
                                             <svg
@@ -309,13 +309,23 @@ const products = [
                             </RadioGroup>
                           </div>
 
-                          <button
-                            type="submit"
+                        {productSelected.status == 'Preparando'?(
+                        <button
+                            onClick={Concluir}
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
-                            Add to bag
+                            Concluir
                           </button>
-                        </form>
+                        ):(
+                          <button
+                            onClick={assume}
+                            className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          >
+                            Assumir
+                          </button>
+                        )}
+                          
+             
                       </section>
                     </div>
                   </div>

@@ -16,8 +16,8 @@ export default function Router(){
         <Route  Component={login}  path="/"/>
         <Route Component={Home} path='/home'/>
         <Route Component={Order} path='/order'/>
-        <Route Component={analitico} path='/analitics'/>
         <Route Component={delivery} path='/delivery'/>
+        <Route Component={analitico} path='/analitics'/>
 
 
         <Route Component={Error} path="/error"/>
