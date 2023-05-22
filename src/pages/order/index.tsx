@@ -110,7 +110,7 @@ const products = [
   
   export default function Order() {
     const [open, setOpen] = useState(false)
-    const [productSelected, setProductSelected] = useState({})
+    const [productSelected, setProductSelected] = useState()
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
     
     const sizes = [
