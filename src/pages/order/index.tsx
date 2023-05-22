@@ -4,30 +4,7 @@ import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
 
-const product = {
-  name: 'Basic Tee 6-Pack ',
-  price: '$192',
-  rating: 3.9,
-  reviewCount: 117,
-  href: '#',
-  imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg',
-  imageAlt: 'Two each of gray, white, and black shirts arranged on table.',
-  colors: [
-    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: true },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: 'XXL', inStock: true },
-    { name: 'XXXL', inStock: false },
-  ],
-}
+
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -63,7 +40,8 @@ const products = [
       imageSrc: 'https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg',
       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
       amount:5,
-      sizes: 'M'
+      sizes: 'M',
+      observation:''
     },
     {
       id: 4,
@@ -73,45 +51,27 @@ const products = [
       imageSrc: 'https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg',
       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
       amount:4,
-      sizes: 'P'
+      sizes: 'P',
+      observation:''
     },
-    {
-        id: 5,
-        name: 'Pizza de Frango',
-        status: 'Pendente',
-        imageSrc: 'https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg',
-        imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-      },
-      {
-        id: 6,
-        name: 'Coxinha de franco com queijo',
-        href: '#',
-        status: 'Pendente',
-        imageSrc: 'https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg',
-        imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-      },
-      {
-        id: 7,
-        name: 'Pastel Misto',
-        href: '#',
-        status: 'Preparando',
-        imageSrc: 'https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg',
-        imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-      },
-      {
-        id: 8,
-        name: 'Pizza de Calabresa',
-        href: '#',
-        status: 'Pendente',
-        imageSrc: 'https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      }
+   
   ]
+
+  type ProdutcsType = {
+    id: number,
+    name: string,
+    href: string,
+    status: string,
+    imageSrc: string,
+    imageAlt: string,
+    amount:number,
+    sizes: string,
+    observation:string
+  }
   
   export default function Order() {
     const [open, setOpen] = useState(false)
-    const [productSelected, setProductSelected] = useState()
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    const [productSelected, setProductSelected] = useState<ProdutcsType>()
     
     const sizes = [
         { name: 'P', inStock: true },
@@ -123,6 +83,7 @@ const products = [
         setOpen(true)
     }
     sizes.forEach(size => {
+        if (productSelected == undefined) return
         if (size.name === productSelected.sizes) {
           size.inStock = false; 
          
@@ -130,11 +91,13 @@ const products = [
       });
     
     function assume(){
+        if (productSelected == undefined) return
         productSelected.status="Preparando"
         setOpen(false)
     }
 
     function Concluir(){
+        if (productSelected == undefined) return
         productSelected.status="Concluído"
         setOpen(false)
     }
@@ -156,6 +119,8 @@ const products = [
                     />
                 </div>
                 <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+              
+
                 {product.status == 'Preparando'?(
                     <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500">{product.status}</p>
                 ):product.status == 'Concluído'?(
@@ -171,7 +136,9 @@ const products = [
           </div>
         </div>
       </div>
-      <Transition.Root show={open} as={Fragment}>
+      {productSelected != undefined?(
+
+          <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
@@ -195,14 +162,14 @@ const products = [
               leave="ease-in duration-200"
               leaveFrom="opacity-100 translate-y-0 md:scale-100"
               leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-            >
+              >
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button
                     type="button"
                     className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
                     onClick={() => setOpen(false)}
-                  >
+                    >
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -213,7 +180,7 @@ const products = [
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{productSelected.name}</h2>
-
+                      <h3 className="mt-4 text-sm text-gray-700">{productSelected.status}</h3>
                       <section aria-labelledby="information-heading" className="mt-2">
                         {/* Reviews */}
                         <div className="mt-6">
@@ -223,10 +190,6 @@ const products = [
                                 {[0, 1, 2, 3, 4].map((rating) => (
                                     <StarIcon
                                     key={rating}
-                                    className={classNames(
-                                        product.rating > rating ? 'text-gray-900' : 'text-gray-200',
-                                        'h-5 w-5 flex-shrink-0'
-                                    )}
                                     aria-hidden="true"
                                     />
                                 ))}
@@ -256,47 +219,47 @@ const products = [
                               </a>
                             </div>
 
-                            <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
+                            <RadioGroup className="mt-4">
                               <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                               <div className="grid grid-cols-4 gap-4">
                                 {sizes.map((size) => (
-                                  <RadioGroup.Option
+                                    <RadioGroup.Option
                                     key={size.name}
                                     value={size}
                                     disabled={!size.inStock}
                                     className={({ active }) =>
-                                      classNames(
+                                    classNames(
                                         size.inStock
                                           ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                                           : 'cursor-not-allowed bg-gray-50 text-gray-200',
                                         active ? 'ring-2 ring-indigo-500' : '',
                                         'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
-                                      )
+                                        )
                                     }
-                                  >
+                                    >
                                     {({ active, checked }) => (
-                                      <>
+                                        <>
                                         <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
                                         {size.inStock ? (
-                                          <span
+                                            <span
                                             className={classNames(
-                                              active ? 'border' : 'border-2',
-                                              checked ? 'border-indigo-500' : 'border-transparent',
-                                              'pointer-events-none absolute -inset-px rounded-md'
-                                            )}
-                                            aria-hidden="false"
-                                          />
+                                                active ? 'border' : 'border-2',
+                                                checked ? 'border-indigo-500' : 'border-transparent',
+                                                'pointer-events-none absolute -inset-px rounded-md'
+                                                )}
+                                                aria-hidden="false"
+                                                />
                                         ) : (
-                                          <span
+                                            <span
                                             aria-hidden="false"
                                             className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                          >
+                                            >
                                             <svg
                                               className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
                                               viewBox="0 0 100 100"
                                               preserveAspectRatio="none"
                                               stroke="currentColor"
-                                            >
+                                              >
                                               <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
                                             </svg>
                                           </span>
@@ -310,16 +273,16 @@ const products = [
                           </div>
 
                         {productSelected.status == 'Preparando'?(
-                        <button
+                            <button
                             onClick={Concluir}
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          >
+                            >
                             Concluir
                           </button>
                         ):(
                           <button
-                            onClick={assume}
-                            className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          onClick={assume}
+                          className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
                             Assumir
                           </button>
@@ -336,6 +299,7 @@ const products = [
         </div>
       </Dialog>
     </Transition.Root>
+    ):(<></>)}
     </>
     )
   }
