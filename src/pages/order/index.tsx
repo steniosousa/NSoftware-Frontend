@@ -6,11 +6,11 @@ import { StarIcon } from '@heroicons/react/20/solid'
 
 
 
-function classNames(...classes:any) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const products = [
+const products: ProdutcsType[] = [
     {
       id: 1,
       name: 'Pizza de Frango',
@@ -20,6 +20,7 @@ const products = [
       observation:"Sem cebola",
       amount:3,
       sizes:'G',
+      href: '',
     },
     {
       id: 2,
@@ -30,7 +31,7 @@ const products = [
       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
       observation:"Pouco queijo",
       amount:1,
-      sizes: 'M'
+      sizes: 'M',
     },
     {
       id: 3,
@@ -53,8 +54,7 @@ const products = [
       amount:4,
       sizes: 'P',
       observation:''
-    },
-   
+    },   
   ]
 
   type ProdutcsType = {
@@ -78,10 +78,11 @@ const products = [
         { name: 'M', inStock: true },
         { name: 'G', inStock: true },
     ]
-     function showProduct(product:any){
+     function showProduct(product: ProdutcsType){
         setProductSelected(product)
         setOpen(true)
     }
+
     sizes.forEach(size => {
         if (productSelected == undefined) return
         if (size.name === productSelected.sizes) {

@@ -9,11 +9,12 @@ export default function Header() {
         { name: 'Pedidos', href: '/order', current: false },
         { name: 'Delivery', href: '/delivery', current: false },
         { name: 'Gerência', href: '/analitics', current: false },
-      ]
-      
-      function classNames(...classes:any) {
+    ]
+        
+    function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
-      }
+    }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
