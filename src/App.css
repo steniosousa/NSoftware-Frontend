@@ -1,13 +1,13 @@
 #root {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   margin: 0 ;
   padding: 0;
   background:url('https://img.freepik.com/vetores-gratis/fundo-branco-com-linhas-onduladas-copia-espaco_23-2148822145.jpg?w=2000');
+  background-repeat: no-repeat;
   background-position: center;
   background-origin: center;
   background-size: cover;
-  background-repeat: no-repeat;
   @media(max-width:1300px) {
     background:white;
   }

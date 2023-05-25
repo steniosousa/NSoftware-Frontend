@@ -1,8 +1,9 @@
 import Header from "../../components/Header"
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
+import axios from "axios"
 
 
 
@@ -10,76 +11,40 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const products: ProdutcsType[] = [
-    {
-      id: 1,
-      name: 'Pizza de Frango',
-      status: 'Pendente',
-      imageSrc: 'https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-      observation:"Sem cebola",
-      amount:3,
-      sizes:'G',
-      href: '',
-    },
-    {
-      id: 2,
-      name: 'Coxinha de franco com queijo',
-      href: '#',
-      status: 'Pendente',
-      imageSrc: 'https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-      observation:"Pouco queijo",
-      amount:1,
-      sizes: 'M',
-    },
-    {
-      id: 3,
-      name: 'Pastel Misto',
-      href: '#',
-      status: 'Preparando',
-      imageSrc: 'https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-      amount:5,
-      sizes: 'M',
-      observation:''
-    },
-    {
-      id: 4,
-      name: 'Pizza de Calabresa',
-      href: '#',
-      status: 'Pendente',
-      imageSrc: 'https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      amount:4,
-      sizes: 'P',
-      observation:''
-    },   
-  ]
-
-  type ProdutcsType = {
-    id: number,
-    name: string,
-    href: string,
-    status: string,
-    imageSrc: string,
-    imageAlt: string,
-    amount:number,
-    sizes: string,
-    observation:string
-  }
-  
+type ProdutcsType = {
+  id: number,
+  name: string,
+  href: string,
+  status: string,
+  imageSrc: string,
+  imageAlt: string,
+  amount:number,
+  sizes: string,
+  observation:string
+}
   export default function Order() {
     const [open, setOpen] = useState(false)
+    const [products, setProducts] = useState<ProdutcsType>([])
     const [productSelected, setProductSelected] = useState<ProdutcsType>()
-    
     const sizes = [
         { name: 'P', inStock: true },
         { name: 'M', inStock: true },
         { name: 'G', inStock: true },
     ]
-     function showProduct(product: ProdutcsType){
-        setProductSelected(product)
+
+    async function getProducts(){
+      const {data} = await axios.get('http://localhost:3000/products');
+     
+      data.forEach(order=>{
+        if(order.status != "Concluído"){
+          setProducts(oldState =>[...oldState,order])
+        }
+      })
+    }
+    
+    
+    function showProduct(product: ProdutcsType){
+      setProductSelected(product)
         setOpen(true)
     }
 
@@ -91,17 +56,22 @@ const products: ProdutcsType[] = [
         }
       });
     
-    function assume(){
+    async function takeOrder(){
         if (productSelected == undefined) return
-        productSelected.status="Preparando"
+        await axios.patch('http://localhost:3000/products/' + productSelected.id,{"status": "Preparando"}  );
+        window.location.reload();
         setOpen(false)
     }
 
-    function Concluir(){
+    async function completeOrder(){
         if (productSelected == undefined) return
-        productSelected.status="Concluído"
-        setOpen(false)
+        await axios.patch('http://localhost:3000/products/' + productSelected.id,{"status": "Concluído"}  );
+        window.location.reload();
+        setOpen(false)  
     }
+    useEffect(() =>{
+      getProducts()
+    },[])
     return (
     <>
     <Header/>
@@ -110,7 +80,10 @@ const products: ProdutcsType[] = [
           <h2 className="sr-only">Products</h2>
 
           <div className="grid grid-cols-1 gap-x-6  gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ">
-            {products.map((product) => (
+            {!products  ?(
+              <h1 className="mt-1 text-sm font-medium text-gray-900  text-blue-800">Carregando</h1>
+            ): (<></>)}
+            {products.map((product:ProdutcsType) => (
                 <div  key={product.id}className="group" onClick={() => showProduct(product)} >
                 <div className="aspect-h-1 aspect-w-1  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
@@ -120,8 +93,6 @@ const products: ProdutcsType[] = [
                     />
                 </div>
                 <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-              
-
                 {product.status == 'Preparando'?(
                     <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500">{product.status}</p>
                 ):product.status == 'Concluído'?(
@@ -133,7 +104,7 @@ const products: ProdutcsType[] = [
                 
                 
               </div>
-            ))}
+            ))} 
           </div>
         </div>
       </div>
@@ -275,14 +246,14 @@ const products: ProdutcsType[] = [
 
                         {productSelected.status == 'Preparando'?(
                             <button
-                            onClick={Concluir}
+                            onClick={completeOrder}
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                             Concluir
                           </button>
                         ):(
                           <button
-                          onClick={assume}
+                          onClick={takeOrder}
                           className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
                             Assumir

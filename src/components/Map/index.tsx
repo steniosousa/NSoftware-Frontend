@@ -1,7 +1,8 @@
-import  { useEffect, useRef } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 
 export default function Map(){
   const mapRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     // Carrega o mapa após o componente ser montado
@@ -27,6 +28,6 @@ export default function Map(){
     }
   }, []);
 
-  return <div ref={mapRef} style={{ height: '400px' }} />;
+  return <div ref={mapRef} style={{ height: '100vh',width:'100%',position:'absolute',top:0,left:0,overflow: 'hidden'}} />;
 }
 

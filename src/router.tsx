@@ -7,7 +7,8 @@ import Error from './pages/modal/modalError'
 import Home from './pages/Home';
 import analitico from './pages/analítico';
 import Order from './pages/order';
-import { delivery } from './pages/delivery';
+import { Delivery } from './pages/delivery';
+
 
 export default function Router(){
   return (
@@ -16,7 +17,7 @@ export default function Router(){
         <Route  Component={login}  path="/"/>
         <Route Component={Home} path='/home'/>
         <Route Component={Order} path='/order'/>
-        <Route Component={delivery} path='/delivery'/>
+        <Route Component={Delivery} path='/delivery'/>
         <Route Component={analitico} path='/analitics'/>
 
 

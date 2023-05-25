@@ -1,0 +1,84 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Pizza de Frango",
+      "status": "Concluído",
+      "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
+      "imageAlt": "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+      "observation": "Sem cebola",
+      "amount": 3,
+      "sizes": "G",
+      "href": "",
+      "user":  {
+        "userID": 1,
+        "name": "stenio",
+        "lat": "‑23.5500",
+        "lng": "‑46.6333",
+        "street": "Avenida José Arthur de Carvalho",
+        "HouseNumber": 531,
+        "Obs": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "Coxinha de franco com queijo",
+      "href": "#",
+      "status": "Concluído",
+      "imageSrc": "https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg",
+      "imageAlt": "Olive drab green insulated bottle with flared screw lid and flat top.",
+      "observation": "Pouco queijo",
+      "amount": 1,
+      "sizes": "M",
+      "user":  {
+        "userID": 1,
+        "name": "stenio",
+        "lat": "‑23.5500",
+        "lng": "‑46.6333",
+        "street": "Avenida José Arthur de Carvalho",
+        "HouseNumber": 531,
+        "Obs": ""
+      }
+    },
+    {
+      "id": 3,
+      "name": "Pastel Misto",
+      "href": "#",
+      "status": "Concluído",
+      "imageSrc": "https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg",
+      "imageAlt": "Person using a pen to cross a task off a productivity paper card.",
+      "amount": 5,
+      "sizes": "M",
+      "observation": "",
+      "user":  {
+        "userID": 1,
+        "name": "stenio",
+        "lat": "‑23.5500",
+        "lng": "‑46.6333",
+        "street": "Avenida José Arthur de Carvalho",
+        "HouseNumber": 531,
+        "Obs": ""
+      }
+    },
+    {
+      "id": 4,
+      "name": "Pizza de Calabresa",
+      "href": "#",
+      "status": "Concluído",
+      "imageSrc": "https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg",
+      "imageAlt": "Hand holding black machined steel mechanical pencil with brass tip and top.",
+      "amount": 4,
+      "sizes": "P",
+      "observation": "",
+      "user":  {
+        "userID": 1,
+        "name": "stenio",
+        "lat": "‑23.5500",
+        "lng": "‑46.6333",
+        "street": "Avenida José Arthur de Carvalho",
+        "HouseNumber": 531,
+        "Obs": ""
+      }
+    }
+  ]
+}
