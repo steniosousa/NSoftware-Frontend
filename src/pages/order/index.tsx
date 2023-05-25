@@ -22,9 +22,10 @@ type ProdutcsType = {
   sizes: string,
   observation:string
 }
+
   export default function Order() {
     const [open, setOpen] = useState(false)
-    const [products, setProducts] = useState<ProdutcsType>([])
+    const [products, setProducts] = useState<ProdutcsType[]>([])
     const [productSelected, setProductSelected] = useState<ProdutcsType>()
     const sizes = [
         { name: 'P', inStock: true },
@@ -35,7 +36,7 @@ type ProdutcsType = {
     async function getProducts(){
       const {data} = await axios.get('http://localhost:3000/products');
      
-      data.forEach(order=>{
+      data.forEach((order: ProdutcsType)=>{
         if(order.status != "Concluído"){
           setProducts(oldState =>[...oldState,order])
         }
