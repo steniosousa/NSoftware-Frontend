@@ -1,166 +1,235 @@
-import Header from "../../components/Header"
+import React from 'react';
+import Graphic from '../../components/graphic';
+import Header from '../../components/Header';
 
-export default function analitico(){
-    const people = [
-        {
-            name: 'Pizza de calabreza',
-            email: '18 pedidos',
-            role: 'R$18,99',
-            imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-            lastSeen: '8% da receita',
-            lastSeenDateTime: '2023-01-23T13:23Z',
-        },
-        {
-            name: 'Pizza de portuguesa',
-            email: '16 pedidos',
-            role: 'R$ 18,99',
-            imageUrl:
-            'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-            lastSeen: '4% da receita',
-            lastSeenDateTime: '2023-01-23T13:23Z',
-        },
-        {
-            name: 'Pizza de frango',
-            email: '12 pedidos',
-            role: 'R$ 18,99',
-            imageUrl:
-            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-            lastSeen: '4% da receita',
-        }
-]
-
-const pedidos = [
-    {
-        name: 'Pizza de calabreza',
-        email: 'Em preparo',
-        role: '8 minutos',
-        imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        lastSeen: 'Horário: 18:55',
-        lastSeenDateTime: '2023-01-23T13:23Z',
-    },
-    {
-        name: 'Pizza de portuguesa',
-        email: 'Pronto para entrega',
-        role: '5 minutos',
-        imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        lastSeen: 'Horário: 19:10',
-        lastSeenDateTime: '2023-01-23T13:23Z',
-    },
-    {
-        name: 'Pizza de frango',
-        email: 'Á caminho',
-        role: '20 minutos',
-        imageUrl:
-        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        lastSeen: 'Horário: 17:10',
+const analitico: React.FC = () => {
+  const toggleDD = (dropdownId: string) => {
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+      dropdown.classNameList.toggle('invisible');
     }
-]
-    return(
+  };
+
+
+  const filterDD = (dropdownId: string, inputId: string) => {
+    const dropdown = document.getElementById(dropdownId);
+    const input = document.getElementById(inputId) as HTMLInputElement;
+    if (dropdown && input) {
+      const filter = input.value.toLowerCase();
+      const items = dropdown.getElementsByTagName('a');
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const textValue = item.textContent || item.innerText;
+        if (textValue.toLowerCase().indexOf(filter) > -1) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      }
+    }
+  };
+
+  return (
     <>
-        <Header/>   
-        <div className="grid grid-cols-4 gap-6 p-2">
-            <div className="bg-gray-200 p-4">
-                <div className="text-center">
-                    <p className="italic ">Pedidos realizados</p>
-                    <h2>61</h2>
-                </div>
-            </div>
-            <div className="bg-gray-200 p-4">
-                <div className="text-center">
-                    <p className="italic ">Pedidos em andamento</p>
-                    <h2>32</h2>
-                </div>
-            </div>
-            <div className="bg-gray-200 p-4">
-                <div className="text-center">
-                    <p className="italic ">Valor médio de pedido</p>
-                    <h2>R$18,99</h2>
-                </div>
-            </div>
-            <div className="bg-green-300 p-4">
-                <div className="text-center">
-                    <p className="italic ">Receita total</p>
-                    <h2>R$500,00</h2>
-                </div>
-            </div>
-            <div className="row-span-2 col-span-1  p-4">
-                <p className="text-center italic">Top pedidos </p>
-            <ul role="list" className="divide-y divide-gray-100 m-4">
-                {people.map((person) => (
-                    <li key={person.email} className="flex justify-between gap-x-6 py-5">
-                    <div className="flex gap-x-4">
-                        <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.imageUrl} alt="" />
-                        <div className="min-w-0 flex-auto">
-                        <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
-                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>
-                        </div>
+    <Header/>
+  <section>
+            <div id="main" className="main-content flex-1 bg-gray-100  pb-24 md:pb-5">
+
+                <div className="bg-gray-800 pt-3">
+                    <div className="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                        <h1 className="font-bold pl-2">Analytics</h1>
                     </div>
-                    <div className="hidden sm:flex sm:flex-col sm:items-end">
-                        <p className="text-sm leading-6 text-gray-900">{person.role}</p>
-                        {person.lastSeen ? (
-                            <p className="mt-1 text-xs leading-5 text-gray-500">
-                           <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
-                        </p>
-                        ) : (
-                            <div className="mt-1 flex items-center gap-x-1.5">
-                            <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </div>
+
+                <div className="flex flex-wrap">
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                            <div className="flex flex-row items-center">
+                                <div className="flex-shrink pr-4">
+                                    <div className="rounded-full p-5 bg-green-600"><i className="fa fa-wallet fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div className="flex-1 text-right md:text-center">
+                                    <h2 className="font-bold uppercase text-gray-600">Total Revenue</h2>
+                                   <p className="font-bold text-3xl">$3249 <span className="text-green-500"><i className="fas fa-caret-up"></i></span></p>
+                                </div>
                             </div>
-                            <p className="text-xs leading-5 text-gray-500">Online</p>
-                        </div>
-                        )}
-                    </div>
-                    </li>
-                ))}
-            </ul>
-            </div>
-            <div className="row-span-2 col-span-1  p-4">
-                <p className="text-center italic">Análise do consumidor </p>
-            <ul role="list" className="divide-y divide-gray-100 m-4">
-                {pedidos.map((person) => (
-                    <li key={person.email} className="flex justify-between gap-x-6 py-5">
-                    <div className="flex gap-x-4">
-                        <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.imageUrl} alt="" />
-                        <div className="min-w-0 flex-auto">
-                        <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
-                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>
                         </div>
                     </div>
-                    <div className="hidden sm:flex sm:flex-col sm:items-end">
-                        <p className="text-sm leading-6 text-gray-900">{person.role}</p>
-                        {person.lastSeen ? (
-                            <p className="mt-1 text-xs leading-5 text-gray-500">
-                           <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
-                        </p>
-                        ) : (
-                            <div className="mt-1 flex items-center gap-x-1.5">
-                            <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+                            <div className="flex flex-row items-center">
+                                <div className="flex-shrink pr-4">
+                                    <div className="rounded-full p-5 bg-pink-600"><i className="fas fa-users fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div className="flex-1 text-right md:text-center">
+                                    <h2 className="font-bold uppercase text-gray-600">Total Users</h2>
+                                    <p className="font-bold text-3xl">249 <span className="text-pink-500"><i className="fas fa-exchange-alt"></i></span></p>
+                                </div>
                             </div>
-                            <p className="text-xs leading-5 text-gray-500">Online</p>
                         </div>
-                        )}
                     </div>
-                    </li>
-                ))}
-            </ul>
-            </div>
-            <div className="  text-center italic flex flex-col justify-around p-4" >
-                <div>
-                    <p>Tempo médio de preparação</p>
-                    <h2>0:30h</h2>
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
+                            <div className="flex flex-row items-center">
+                                <div className="flex-shrink pr-4">
+                                    <div className="rounded-full p-5 bg-yellow-600"><i className="fas fa-user-plus fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div className="flex-1 text-right md:text-center">
+                                    <h2 className="font-bold uppercase text-gray-600">New Users</h2>
+                                    <p className="font-bold text-3xl">2 <span className="text-yellow-600"><i className="fas fa-caret-up"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
+                            <div className="flex flex-row items-center">
+                                <div className="flex-shrink pr-4">
+                                    <div className="rounded-full p-5 bg-blue-600"><i className="fas fa-server fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div className="flex-1 text-right md:text-center">
+                                    <h2 className="font-bold uppercase text-gray-600">Server Uptime</h2>
+                                    <p className="font-bold text-3xl">152 days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-gradient-to-b from-indigo-200 to-indigo-100 border-b-4 border-indigo-500 rounded-lg shadow-xl p-5">
+                            <div className="flex flex-row items-center">
+                                <div className="flex-shrink pr-4">
+                                    <div className="rounded-full p-5 bg-indigo-600"><i className="fas fa-tasks fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div className="flex-1 text-right md:text-center">
+                                    <h2 className="font-bold uppercase text-gray-600">To Do List</h2>
+                                    <p className="font-bold text-3xl">7 tasks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-gradient-to-b from-red-200 to-red-100 border-b-4 border-red-500 rounded-lg shadow-xl p-5">
+                            <div className="flex flex-row items-center">
+                                <div className="flex-shrink pr-4">
+                                    <div className="rounded-full p-5 bg-red-600"><i className="fas fa-inbox fa-2x fa-inverse"></i></div>
+                                </div>
+                                <div className="flex-1 text-right md:text-center">
+                                    <h2 className="font-bold uppercase text-gray-600">Issues</h2>
+                                    <p className="font-bold text-3xl">3 <span className="text-red-500"><i className="fas fa-caret-up"></i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p>Tempo de entrega médio</p>
-                    <h2>0:50h</h2>
+
+
+                <div className="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <div className="bg-white border-transparent rounded-lg shadow-xl">
+                        <div className="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h1 className="font-bold uppercase text-gray-600">Graph</h1>
+                        </div>
+                        <div className="p-5">
+                            <Graphic/> 
+                        </div>
+                    </div>
+                </div>
+
+                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <div className="bg-white border-transparent rounded-lg shadow-xl">
+                        <div className="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h2 className="font-bold uppercase text-gray-600">Graph</h2>
+                        </div>
+                        <div className="p-5">
+                            <canvas id="chartjs-0" className="chartjs" width="undefined" height="undefined"></canvas>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <div className="bg-white border-transparent rounded-lg shadow-xl">
+                        <div className="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h2 className="font-bold uppercase text-gray-600">Graph</h2>
+                        </div>
+                        <div className="p-5">
+                            <canvas id="chartjs-1" className="chartjs" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <div className="bg-white border-transparent rounded-lg shadow-xl">
+                        <div className="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h5 className="font-bold uppercase text-gray-600">Graph</h5>
+                        </div>
+                        <div className="p-5"><canvas id="chartjs-4" className="chartjs" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                    <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <div className="bg-white border-transparent rounded-lg shadow-xl">
+                            <div className="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 className="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div className="p-5">
+                                <table className="w-full p-5 text-gray-700">
+                                    <thead>
+                                    <tr>
+                                        <th className="text-left text-blue-900">Name</th>
+                                        <th className="text-left text-blue-900">Side</th>
+                                        <th className="text-left text-blue-900">Role</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>Obi Wan Kenobi</td>
+                                        <td>Light</td>
+                                        <td>Jedi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Greedo</td>
+                                        <td>South</td>
+                                        <td>Scumbag</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Darth Vader</td>
+                                        <td>Dark</td>
+                                        <td>Sith</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <p className="py-2"><a href="#">See More issues...</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <div className="bg-white border-transparent rounded-lg shadow-xl">
+                        <div className="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h2 className="font-bold uppercase text-gray-600">Advert</h2>
+                        </div>
+                        <div className="p-5 text-center">
+
+
+                            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CK7D52JJ&placement=wwwtailwindtoolboxcom" id="_carbonads_js"></script>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
                 </div>
             </div>
-           
-        </div>
-        
+        </section>
     </>
-    )
-}
+  );
+};
+
+export default analitico;

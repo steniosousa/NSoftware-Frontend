@@ -28,6 +28,10 @@ export default function Map(){
     }
   }, []);
 
-  return <div ref={mapRef} style={{ height: '100vh',width:'100%',position:'absolute',top:0,left:0,overflow: 'hidden'}} />;
+  return (
+    <div style={{ height: '100vh',width:'100%',background:'white',position:'fixed',top:0,left:0,overflow: ''}}>
+      <div ref={mapRef} style={{ height: '100vh',width:'100%',position:'absolute',top:0,left:0,overflow: ''}}></div>
+    </div>
+  )
 }
 
