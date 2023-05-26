@@ -76,11 +76,16 @@ export default function Login(){
               </button>
             </div>
           </form>
+          <div className="flex flex-row justify-around">
+          <p className="mt-10 text-center text-sm text-gray-500">
+            <Link to="/register"  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Cadastrar-se</Link>
+          </p>
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Encontrou um erro?{' '}
             <Link to="/error"  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> informar erro!</Link>
           </p>
+          </div>
         </div>
 
        

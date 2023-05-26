@@ -9,7 +9,7 @@ export default function Home() {
         navigate('/')
     }
     function handleAnalitics(){
-        navigate('/analitics')
+        navigate('/management')
     }
     function handleOrder(){
         navigate('/order')

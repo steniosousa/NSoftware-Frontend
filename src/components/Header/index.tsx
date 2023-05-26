@@ -8,7 +8,7 @@ export default function Header() {
         { name: 'Dashboard', href: '/home', current: true },
         { name: 'Pedidos', href: '/order', current: false },
         { name: 'Delivery', href: '/delivery', current: false },
-        { name: 'Gerência', href: '/analitics', current: false },
+        { name: 'Gerência', href: '/management', current: false },
     ]
         
     function classNames(...classes: string[]) {

@@ -80,5 +80,33 @@
         "Obs": ""
       }
     }
+  ],
+  "company": [
+    {
+      "companyCod": "435F57X"
+    }
+  ],
+  "employee": [
+    {
+      "id": 0.10058533878134646,
+      "companyCode": "435F57X",
+      "password": "1029qpWO$",
+      "name": "Stênio Sousa",
+      "email": "steniosousaf@gmail.com"
+    },
+    {
+      "id": 0.10058533878134646,
+      "companyCode": "435F57X",
+      "password": "1029qpWO$",
+      "name": "Stênio Sousa",
+      "email": "steniosousaf@gmail.com"
+    },
+    {
+      "id": 0.10058533878134646,
+      "companyCode": "435F57H",
+      "password": "1029qpWO$",
+      "name": "Stênio Sousa",
+      "email": "steniosousaf@gmail.com"
+    }
   ]
 }

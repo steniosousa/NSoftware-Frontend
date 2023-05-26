@@ -1,47 +1,61 @@
 import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import {Chart, ChartTypeRegistry } from 'chart.js/auto';
 
-const Graphic: React.FC = () => {
-  const chartRef = useRef<HTMLCanvasElement>(null);
+interface GraphicProps {
+  panelType: string;
+}
+
+const Graphic: React.FC<GraphicProps> = ({ panelType }) => {
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     if (chartRef.current) {
-      new Chart(chartRef.current, {
-        type: 'bar',
-        data: {
-          labels: ['January', 'February', 'March', 'April'],
-          datasets: [
-            {
-              label: 'Page Impressions',
-              data: [10, 20, 30, 40],
-              borderColor: 'rgb(255, 99, 132)',
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            },
-            {
-              label: 'Adsense Clicks',
-              data: [5, 15, 10, 30],
-              type: 'line',
-              fill: false,
-              borderColor: 'rgb(54, 162, 235)',
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              type: 'linear',
-              beginAtZero: true,
-              ticks: {
-                stepSize: 10,
-              },
-            },
-          },
-        },
-      });
-    }
-  }, []);
+      const ctx = chartRef.current.getContext('2d');
 
-  return <canvas ref={chartRef} id="chartjs-7" />;
+      // Configuração dos dados e opções do gráfico
+      const chartData = {
+        labels: ['Label 1', 'Label 2', 'Label 3'],
+        datasets: [
+          {
+            label: 'Dataset 1',
+            data: [10, 20, 30],
+            backgroundColor: 'rgba(0, 155, 255, 0.8)',
+          },
+        ],
+      };
+      const chartOptions = {
+        // Opções do gráfico
+      };
+
+      switch (panelType) {
+        case 'bar':
+          new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions,
+          } as ChartTypeRegistry['chart']);
+          break;
+        case 'line':
+          new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: chartOptions,
+          } as ChartTypeRegistry['chart']);
+          break;
+        case 'pie':
+          new Chart(ctx, {
+            type: 'pie',
+            data: chartData,
+            options: chartOptions,
+          } as ChartTypeRegistry['chart']);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [panelType]);
+
+  return <canvas ref={chartRef} />;
 };
 
 export default Graphic;
