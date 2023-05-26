@@ -16,8 +16,8 @@ export default function Router(){
   return (
     <BrowserRouter>
       <Routes>
-        <Route  Component={login}  path="/"/>
-        <Route  Component={Register}  path="/register"/>
+        <Route Component={login}  path="/"/>
+        <Route Component={Register}  path="/register"/>
         <Route Component={Home} path='/home'/>
         <Route Component={Order} path='/order'/>
         <Route Component={Delivery} path='/delivery'/>
