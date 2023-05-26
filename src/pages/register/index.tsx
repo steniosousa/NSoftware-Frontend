@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Alert from "../../components/Alert";
 export default function Register(){
-    const navigate = useNavigate();
     const [companyCode,setCompanyCode] = useState('')
     const [password,setPassword] = useState('')
     const [name, setName] = useState('');
