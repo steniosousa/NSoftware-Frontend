@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export class register{
+export class Axios{
     async post(param:any){
         let responseRequest
         try{
