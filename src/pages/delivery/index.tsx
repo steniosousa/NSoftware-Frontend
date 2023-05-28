@@ -21,9 +21,9 @@ export function Delivery() {
   const [products, setProducts] = useState<ProductsType[]>([]);
   const [productSelected, setProductSelected] = useState<ProductsType[]>([]);
   const [map, setMap] = useState(Boolean)
-
+  
   async function getProducts() {
-    const { data } = await axios.get('http://localhost:3000/products');
+    const { data } = await axios.get('http://localhost:3000/products', {params:{companyCode: '435F57X'}});
     const completedOrders = data.filter((order: ProductsType) => order.status === "Concluído");
     setProducts(completedOrders);
   }

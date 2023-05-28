@@ -21,8 +21,8 @@ export default function Map(){
     } else {
       // Carrega a API do Google Maps assincronamente
       const script = document.createElement('script');
-     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCOiwdX3bp-LcRn7vexF2nr4erxFG7WYTM`;
-      // script.src = `https://maps.googleapis.com/maps/api/js?key=chave`;
+    //  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCOiwdX3bp-LcRn7vexF2nr4erxFG7WYTM`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=chave`;
       script.onload = loadMap;
       document.body.appendChild(script);
     }

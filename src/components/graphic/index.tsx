@@ -3,6 +3,16 @@ import { Chart } from 'chart.js/auto';
 
 interface GraphicProps {
   panelType: string;
+  datas:{
+    labels: string[],
+    datasets: [
+      {
+        label: string,
+        data: number[],
+        backgroundColor: string,
+      },
+    ],
+  };
 }
 
 const Graphic: React.FC<GraphicProps> = ({ panelType, datas}) => {
@@ -23,8 +33,6 @@ const Graphic: React.FC<GraphicProps> = ({ panelType, datas}) => {
           },
         ],
       };
-
-      console.log(datas, chartData)
       const chartOptions = {
         // Chart options
       };
@@ -63,7 +71,7 @@ const Graphic: React.FC<GraphicProps> = ({ panelType, datas}) => {
         }
       };
     }
-  }, [panelType]);
+  }, [panelType,datas]);
 
   return <canvas ref={chartRef} />;
 };

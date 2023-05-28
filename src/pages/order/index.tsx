@@ -34,7 +34,9 @@ type ProdutcsType = {
     ]
 
     async function getProducts(){
-      const {data} = await axios.get('http://localhost:3000/products');
+      const {data} = await axios.get('http://localhost:3000/products', {params:{
+        companyCode: '435F57X'
+    }});
      
       data.forEach((order: ProdutcsType)=>{
         if(order.status != "Concluído"){

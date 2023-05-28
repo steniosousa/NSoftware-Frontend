@@ -13,6 +13,7 @@ type EmployeeProps = {
     name:string,
     email: string,
     role:string,
+    value:number
 }
 
 type ProductsProps ={
@@ -29,6 +30,24 @@ type ProductsProps ={
     companyCode:string,
 }
 
+type grapicProps = {
+    labels: string[],
+    datasets: [
+        {
+        label: string,
+        data: number[],
+        backgroundColor: string,
+        },
+    ],
+}
+
+type stockProps = {
+    id:number,
+    product:string,
+    value:number,
+    companyCode: string
+}
+
 
 const Management: React.FC = () => {
     const [dateStart, setDateStart] = useState<Date>(new Date())
@@ -38,7 +57,10 @@ const Management: React.FC = () => {
     const [invoicing, setInvoicing] = useState('R$ 0')
     const [clients, setClients] = useState([])
     const [dateRange, setDateRange] = useState<ProductsProps[]>([])
-    const [charDataBar, setCharDataBar] = useState({})
+    const [charDataBar, setCharDataBar] = useState({} as grapicProps)
+    const [allPreparingOnder, setPreparing] = useState<ProductsProps[]>([])
+    const [expenses, setExpenses] = useState('R$ 0')
+    const [stock, setStock] = useState<stockProps[]>([])
 
       async function getData(){
         const startDate = new Date();
@@ -47,23 +69,25 @@ const Management: React.FC = () => {
         endDate.setHours(23, 59, 59, 999); 
         setDateStart(startDate)
         setDateEnd(endDate)
-       
         try{
-            const [employeesResponse, orderResponse,cliensResponse]: AxiosResponse[] = await Promise.all([
+            const [employeesResponse, orderResponse,cliensResponse, stockResponse]: AxiosResponse[] = await Promise.all([
                 axios.get<EmployeeProps[]>('http://localhost:3000/employee', { params: { companyCode: '435F57X'} }),
                 axios.get('http://localhost:3000/products',{
                     params:{
                         companyCode: '435F57X'
                     }
                 }),
-                axios.get('http://localhost:3000/clients',{params:{companyCod: "435F57X",}})
+                axios.get('http://localhost:3000/clients',{params:{companyCod: "435F57X",}}),
+                axios.get('http://localhost:3000/stock',{params:{companyCode: '435F57X'}})
             ])
             const registeredEmployees:EmployeeProps[] = employeesResponse.data
             const registeredOrder:ProductsProps[] = orderResponse.data
             const registerCliensResponse = cliensResponse.data
+            const registerStock = stockResponse.data
             setEmployees(registeredEmployees)
             setOrder(registeredOrder)
             setClients(registerCliensResponse)
+            setStock(registerStock)
         } catch(error){ 
             console.log(error)
         }
@@ -87,16 +111,15 @@ const Management: React.FC = () => {
         }
       }
 
-      function growthRate(){
+      function growthRateDays(){
         const days = eachDayOfInterval({ start: dateStart, end: dateEnd });
-        const formattedDays = days.map((day) => format(day, 'yyyy/MM/dd', { locale: ptBR }));
+        const formattedDays:string[] = days.map((day) => format(day, 'yyyy/MM/dd', { locale: ptBR }));
         const newArray = order.map((obj) => {
             return {
               id: obj.id,
               date: obj.date,
             };
           });
-
        const daysForOrder = formattedDays.map((day) =>{
             const desiredDate = new Date(day);
 
@@ -111,7 +134,7 @@ const Management: React.FC = () => {
             return salesCount
         })
 
-        const chartData = {
+        const chartData:grapicProps = {
             labels: formattedDays,
             datasets: [
               {
@@ -126,8 +149,6 @@ const Management: React.FC = () => {
       }
 
       
-      
-
     function calculateBilling(){
         let totalBilling = 0
         dateRange.forEach((money) =>{
@@ -143,18 +164,48 @@ const Management: React.FC = () => {
        window.location.reload();
     };
 
+    function preparing(){
+        const preparingAll:ProductsProps[] = []
+        order.forEach((getQuantity) =>{
+            if(getQuantity.status == "Preparando"){
+                const itemExists = preparingAll.some((item) => item.id === getQuantity.id);
+               if(!itemExists){
+                preparingAll.push(getQuantity)
+               }
+            }
+        })
+        setPreparing(preparingAll)
+    }
+
+    function expensesTotal(){
+        let wageTotal = 0
+        employees.forEach((wage) =>{
+            wageTotal += wage.value
+        })
+        stock.forEach((costStock) =>{
+            wageTotal += costStock.value
+        })
+        console.log(stock)
+        const wageFormated = wageTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        setExpenses(wageFormated)
+
+    }
+
 useEffect(() =>{
     getData()
 },[])
 
 useEffect(() => {
     CalculateRangeDate();
-    growthRate()
-  }, [ dateEnd, order,]);
-  
-  useEffect(() => {
+    growthRateDays()
+    preparing()
+}, [ dateEnd, order]);
+
+useEffect(() => {
+    expensesTotal()
     calculateBilling();
-    growthRate()
+    growthRateDays()
   }, [dateRange]);
 
   return (
@@ -193,7 +244,6 @@ useEffect(() => {
                                 <div className="flex-shrink pr-4">
                                     <div className="rounded-full p-5 bg-green-600"><i className="fa fa-wallet fa-2x fa-inverse"></i></div>
                                 </div>
-                                    <button onClick={growthRate}>g</button>
                                 <div className="flex-1 text-right md:text-center">
                                     <h2 className="font-bold uppercase text-gray-600">Faturamento </h2>
                                    <p className="font-bold text-3xl">{invoicing} <span className="text-green-500"><i className="fas fa-caret-up"></i></span></p>
@@ -208,8 +258,8 @@ useEffect(() => {
                                     <div className="rounded-full p-5 bg-green-600"><i className="fas fa-2x fa-chart-line"></i></div>
                                 </div>
                                 <div className="flex-1 text-right md:text-center">
-                                    <h2 className="font-bold uppercase text-gray-600">Faturamento Hoje</h2>
-                                    <p className="font-bold text-3xl">$143 <span className="text-pink-500"></span></p>
+                                    <h2 className="font-bold uppercase text-gray-600">despesas totais</h2>
+                                    <p className="font-bold text-3xl">{expenses} <span className="text-pink-500"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +285,7 @@ useEffect(() => {
                                 </div>
                                 <div className="flex-1 text-right md:text-center">
                                     <h2 className="font-bold uppercase text-gray-600">pedidos realizados</h2>
-                                    <p className="font-bold text-3xl">152</p>
+                                    <p className="font-bold text-3xl">{order.length}</p>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +298,7 @@ useEffect(() => {
                                 </div>
                                 <div className="flex-1 text-right md:text-center">
                                     <h2 className="font-bold uppercase text-gray-600">Preparando</h2>
-                                    <p className="font-bold text-3xl">7 </p>
+                                    <p className="font-bold text-3xl">{allPreparingOnder.length}</p>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +336,7 @@ useEffect(() => {
                             <h2 className="font-bold uppercase text-gray-600 text-center">Horario de pico</h2>
                         </div>
                         <div className="p-5">
-                        {/* <Graphic panelType={'line'} datas={charDataBar}/>   */}
+                        <Graphic panelType={'line'} datas={charDataBar}/>  
                         </div>
                     </div>
                 </div>
@@ -309,6 +359,9 @@ useEffect(() => {
                                     </th>
                                     <th className=" p-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Alterar
+                                    </th>
+                                    <th className=" p-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Salário
                                     </th>
                                 </tr>
                                 </thead>
@@ -336,6 +389,7 @@ useEffect(() => {
                                         <option value="Garçom">Garçom</option>
                                         </select>
                                     </td>
+                                    <td className="py-4 px-6 whitespace-nowrap"><div className="text-sm text-gray-900">R$ {item.value}</div></td>
                                   
                                     </tr>
                                 ))}
