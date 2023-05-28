@@ -3,6 +3,7 @@
     {
       "id": 1,
       "name": "Pizza de Frango",
+      "recipeId":1,
       "status": "Concluído",
       "date": "Sun May 24 2023 00:03:40 ",
       "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
@@ -27,6 +28,7 @@
       "id": 67,
       "name": "Pizza de Frango",
       "status": "Preparando",
+      "recipeId":1,
       "date": "Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
       "imageAlt": "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
@@ -51,6 +53,7 @@
       "name": "Coxinha de franco com queijo",
       "href": "#",
       "status": "Concluído",
+      "recipeId":1,
       "date": "Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg",
       "imageAlt": "Olive drab green insulated bottle with flared screw lid and flat top.",
@@ -74,6 +77,7 @@
       "name": "Pastel Misto",
       "href": "#",
       "status": "Preparando",
+      "recipeId":1,
       "date": "Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg",
       "imageAlt": "Person using a pen to cross a task off a productivity paper card.",
@@ -97,6 +101,7 @@
       "name": "Pizza de Calabresa",
       "href": "#",
       "status": "Concluído",
+      "recipeId":1,
       "date": "Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg",
       "imageAlt": "Hand holding black machined steel mechanical pencil with brass tip and top.",
@@ -120,6 +125,7 @@
       "name": "Pizza de Calabresa",
       "href": "#",
       "status": "Concluído",
+      "recipeId":1,
       "date": "Sat May 28 2023 23:08:09 ",
       "imageSrc": "https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg",
       "imageAlt": "Hand holding black machined steel mechanical pencil with brass tip and top.",
@@ -208,25 +214,50 @@
     "id":1,
     "product":"Farinha de trigo",
     "value":8,
-    "companyCode": "435F57X"
+    "companyCode": "435F57X",
+    "Unity":"KG",
+    "amount":6
     },
     {
     "id":2,
     "product":"óloe",
     "value":20,
-    "companyCode": "435F57X"
+    "companyCode": "435F57X",
+    "Unity":"L",
+    "amount":6
     },
     {
     "id":3,
     "product":"bandeja de ovo",
     "value":24,
-    "companyCode": "435F57X"
+    "companyCode": "435F57X",
+    "Unity":"UN",
+    "amount":3
     },
     {
     "id":4,
     "product":"Açucar",
     "value":6,
-    "companyCode": "435F57X"
+    "companyCode": "435F57X",
+    "Unity":"KG",
+    "amount":6
+    }
+  ],
+  "recipe":[
+    {
+      "id":1,
+      "productName":"Pizza de Frango",
+      "ingredients": [
+        {
+          "id": 1,
+          "amount": 1
+        },
+        {
+          "id": 4,
+          "amount": 1
+        }
+      ]
+      
     }
   ]
 }

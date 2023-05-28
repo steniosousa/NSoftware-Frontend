@@ -23,16 +23,6 @@ const Graphic: React.FC<GraphicProps> = ({ panelType, datas}) => {
       const ctx = chartRef.current.getContext('2d');
 
       // Chart data and options configuration
-      const chartData = {
-        labels: ['Label 1', 'Label 2', 'Label 3'],
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data: [10, 20, 30],
-            backgroundColor: 'rgba(0, 155, 255, 0.8)',
-          },
-        ],
-      };
       const chartOptions = {
         // Chart options
       };

@@ -28,6 +28,7 @@ type ProductsProps ={
     value:number,
     sizes:string,
     companyCode:string,
+    recipeId:number
 }
 
 type grapicProps = {
@@ -45,7 +46,9 @@ type stockProps = {
     id:number,
     product:string,
     value:number,
-    companyCode: string
+    companyCode: string,
+    Unity:string,
+    amount:number
 }
 
 
@@ -61,6 +64,7 @@ const Management: React.FC = () => {
     const [allPreparingOnder, setPreparing] = useState<ProductsProps[]>([])
     const [expenses, setExpenses] = useState('R$ 0')
     const [stock, setStock] = useState<stockProps[]>([])
+    const [recipe, setRecipe] = useState([])
 
       async function getData(){
         const startDate = new Date();
@@ -177,7 +181,13 @@ const Management: React.FC = () => {
         setPreparing(preparingAll)
     }
 
-    function expensesTotal(){
+    async function expensesTotal(){
+        order.forEach(async (recipeResponse)=>{
+            const recipeAll = await axios.get("http://localhost:3000/recipe",{params:{id:recipeResponse.recipeId}});
+            setRecipe(recipeAll.data[0])
+        })
+        
+        console.log(recipe)
         let wageTotal = 0
         employees.forEach((wage) =>{
             wageTotal += wage.value
@@ -185,11 +195,11 @@ const Management: React.FC = () => {
         stock.forEach((costStock) =>{
             wageTotal += costStock.value
         })
-        console.log(stock)
+
         const wageFormated = wageTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
         setExpenses(wageFormated)
-
+        
     }
 
 useEffect(() =>{
@@ -199,11 +209,11 @@ useEffect(() =>{
 useEffect(() => {
     CalculateRangeDate();
     growthRateDays()
+    expensesTotal()
     preparing()
-}, [ dateEnd, order]);
+}, [ order,dateEnd ]);
 
 useEffect(() => {
-    expensesTotal()
     calculateBilling();
     growthRateDays()
   }, [dateRange]);
