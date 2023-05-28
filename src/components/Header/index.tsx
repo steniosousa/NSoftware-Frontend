@@ -47,6 +47,7 @@ export default function Header() {
                   <img
                     className="block h-8 w-auto lg:hidden"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    onClick={() =>navigate('/home')}
                     alt="Your Company"
                   />
                   <img

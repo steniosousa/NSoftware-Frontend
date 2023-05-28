@@ -5,7 +5,7 @@ interface GraphicProps {
   panelType: string;
 }
 
-const Graphic: React.FC<GraphicProps> = ({ panelType }) => {
+const Graphic: React.FC<GraphicProps> = ({ panelType, datas}) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -23,6 +23,8 @@ const Graphic: React.FC<GraphicProps> = ({ panelType }) => {
           },
         ],
       };
+
+      console.log(datas, chartData)
       const chartOptions = {
         // Chart options
       };
@@ -33,21 +35,21 @@ const Graphic: React.FC<GraphicProps> = ({ panelType }) => {
         case 'bar':
           chartInstance = new Chart(ctx as any, {
             type: 'bar',
-            data: chartData,
+            data: datas,
             options: chartOptions as any,
           });
           break;
         case 'line':
           chartInstance = new Chart(ctx as any, {
             type: 'line',
-            data: chartData,
+            data: datas,
             options: chartOptions as any,
           });
           break;
         case 'pie':
           chartInstance = new Chart(ctx as any, {
             type: 'pie',
-            data: chartData,
+            data: datas,
             options: chartOptions as any,
           });
           break;

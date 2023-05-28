@@ -3,13 +3,39 @@
     {
       "id": 1,
       "name": "Pizza de Frango",
-      "status": "Concluído",
+      "status": "Preparando",
+      "date":"Sun May 24 2023 00:03:40 ",
       "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
       "imageAlt": "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
       "observation": "Sem cebola",
       "amount": 3,
+      "value": 15,
       "sizes": "G",
       "href": "",
+      "companyCode": "435F57X",
+      "user": {
+        "userID": 1,
+        "name": "stenio",
+        "lat": "‑23.5500",
+        "lng": "‑46.6333",
+        "street": "Avenida José Arthur de Carvalho",
+        "HouseNumber": 531,
+        "Obs": ""
+      }
+    },
+    {
+      "id": 67,
+      "name": "Pizza de Frango",
+      "status": "Preparando",
+      "date":"Sat May 27 2023 23:08:09 ",
+      "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
+      "imageAlt": "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+      "observation": "Sem cebola",
+      "amount": 3,
+      "value": 15,
+      "sizes": "G",
+      "href": "",
+      "companyCode": "435F57X",
       "user": {
         "userID": 1,
         "name": "stenio",
@@ -25,11 +51,14 @@
       "name": "Coxinha de franco com queijo",
       "href": "#",
       "status": "Concluído",
+      "date":"Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg",
       "imageAlt": "Olive drab green insulated bottle with flared screw lid and flat top.",
       "observation": "Pouco queijo",
       "amount": 1,
+      "value": 15,
       "sizes": "M",
+      "companyCode": "",
       "user": {
         "userID": 1,
         "name": "stenio",
@@ -44,11 +73,14 @@
       "id": 3,
       "name": "Pastel Misto",
       "href": "#",
-      "status": "Pedido",
+      "status": "Preparando",
+      "date":"Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg",
       "imageAlt": "Person using a pen to cross a task off a productivity paper card.",
       "amount": 5,
+      "value": 15,
       "sizes": "M",
+      "companyCode": "",
       "observation": "",
       "user": {
         "userID": 1,
@@ -64,11 +96,14 @@
       "id": 4,
       "name": "Pizza de Calabresa",
       "href": "#",
-      "status": "Preparando",
+      "status": "Concluído",
+      "date":"Sat May 27 2023 23:08:09 ",
       "imageSrc": "https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg",
       "imageAlt": "Hand holding black machined steel mechanical pencil with brass tip and top.",
       "amount": 4,
+      "value": 15,
       "sizes": "P",
+      "companyCode": "435F57X",
       "observation": "",
       "user": {
         "userID": 1,
@@ -86,27 +121,116 @@
       "companyCod": "435F57X"
     }
   ],
+  "clients":[
+    {
+      "userID": 1,
+      "name": "stenio",
+      "companyCod": "435F57X",
+      "lat": "‑23.5500",
+      "lng": "‑46.6333",
+      "street": "Avenida José Arthur de Carvalho",
+      "HouseNumber": 531,
+      "Obs": ""
+    },{
+      "userID": 2,
+      "name": "stenio",
+      "companyCod": "435F57X",
+      "lat": "‑23.5500",
+      "lng": "‑46.6333",
+      "street": "Avenida José Arthur de Carvalho",
+      "HouseNumber": 531,
+      "Obs": ""
+    },{
+      "userID": 3,
+      "name": "stenio",
+      "companyCod": "435F57X",
+      "lat": "‑23.5500",
+      "lng": "‑46.6333",
+      "street": "Avenida José Arthur de Carvalho",
+      "HouseNumber": 531,
+      "Obs": ""
+    }
+  ],
   "employee": [
     {
       "id": 0.10058533878134646,
       "companyCode": "435F57X",
       "password": "1029qpWO$",
       "name": "Stênio Sousa",
-      "email": "steniosousaf@gmail.com"
+      "email": "steniosousaf@gmail.com",
+      "role": "Cozinheiro"
     },
     {
       "id": 0.10058533878184646,
       "companyCode": "435F57X",
       "password": "1029qpWO$",
       "name": "Stênio Sousa",
-      "email": "steniosousaf@gmail.com"
+      "email": "steniosousaf@gmail.com",
+      "role": "Cozinheiro"
     },
     {
       "id": 0.78,
       "companyCode": "435F57H",
       "password": "1029qpWO$",
       "name": "Stênio Sousa",
-      "email": "steniosousaf@gmail.com"
+      "email": "steniosousaf@gmail.com",
+      "role": ""
+    },
+    {
+      "id": 0.5600222602562417,
+      "companyCode": "435F57X",
+      "password": "teste",
+      "name": "teste",
+      "email": "teste@gmail.com",
+      "role": "Motoboy"
+    },
+    {
+      "id": 0.037867303059655466,
+      "companyCode": "435F57X",
+      "password": "teste2",
+      "name": "teste2",
+      "email": "teste2@gmail.com",
+      "role": ""
+    },
+    {
+      "id": 0.03786730305946555,
+      "companyCode": "435F57X",
+      "password": "teste2",
+      "name": "teste2",
+      "email": "teste2@gmail.com",
+      "role": ""
+    },
+    {
+      "id": 0.03786730305659655,
+      "companyCode": "435F57X",
+      "password": "teste2",
+      "name": "teste2",
+      "email": "teste2@gmail.com",
+      "role": ""
+    },
+    {
+      "id": 0.037867303065965544,
+      "companyCode": "435F57X",
+      "password": "teste2",
+      "name": "teste2",
+      "email": "teste2@gmail.com",
+      "role": ""
+    },
+    {
+      "id": 0.037867303075965544,
+      "companyCode": "435F57X",
+      "password": "teste2",
+      "name": "teste2",
+      "email": "teste2@gmail.com",
+      "role": ""
+    },
+    {
+      "id": 0.8239108326700564,
+      "companyCode": "435F57X",
+      "password": "teste",
+      "name": "dayane2",
+      "email": "steniosousaf@gmail.com",
+      "role": "Garçom"
     }
   ]
 }

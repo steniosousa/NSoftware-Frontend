@@ -30,6 +30,7 @@ export default function Register(){
             password,
             name,
             email,
+            role:""
           };
     
           await axios.post('http://localhost:3000/employee', newEmployee);

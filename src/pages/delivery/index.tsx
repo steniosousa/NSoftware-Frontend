@@ -52,7 +52,7 @@ export function Delivery() {
       <div className="mx-auto max-w-2xl px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {!products.length ? (
-            <h1 className="mt-1 text-sm font-medium text-gray-900 text-blue-800">Carregando</h1>
+            <h1 className="mt-1 text-sm font-medium text-gray-900 text-blue-800 text-center" >Carregando</h1>
           ) : (
             <>
               {products.map((product: ProductsType) => (

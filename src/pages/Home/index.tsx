@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import pedido  from "../../assets/pedido-online.png"
 import delivery from '../../assets/entrega-rapida.png'
 import gerencia from '../../assets/gerenciamento-de-projetos.png'
-import { CheckIcon } from "@heroicons/react/24/outline";
 export default function Home() {
     const navigate = useNavigate();
     function handleExit(){
@@ -24,7 +23,6 @@ export default function Home() {
             className="absolute right-10 top-10 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={handleExit}
           >
-            <CheckIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
             Sair
           </button>
       <div className="  flex justify-center items-center min-h-screen">
