@@ -1,4 +1,3 @@
-import axios from "axios";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import Map from "../../components/Map";
