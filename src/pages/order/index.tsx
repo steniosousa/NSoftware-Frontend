@@ -4,6 +4,7 @@ import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
 import axios from "axios"
+import Api from "../../services/api"
 
 
 
@@ -27,6 +28,7 @@ type ProdutcsType = {
     const [open, setOpen] = useState(false)
     const [products, setProducts] = useState<ProdutcsType[]>([])
     const [productSelected, setProductSelected] = useState<ProdutcsType>()
+    const [teste, setTeste]= useState([])
     const sizes = [
         { name: 'P', inStock: true },
         { name: 'M', inStock: true },
@@ -34,11 +36,16 @@ type ProdutcsType = {
     ]
 
     async function getProducts(){
-      const {data} = await axios.get('http://localhost:3000/products', {params:{
-        companyCode: '435F57X'
-    }});
-     
-      data.forEach((order: ProdutcsType)=>{
+      try{
+        const {data} = await Api.get('/products', {params:{
+          companyCode: '435F57X'
+        }});
+        setTeste(data)
+      }catch(error){console.log(error)}
+    }
+
+    function atributeProducts(){
+      teste.forEach((order: ProdutcsType)=>{
         if(order.status != "Concluído"){
           setProducts(oldState =>[...oldState,order])
         }
@@ -75,6 +82,10 @@ type ProdutcsType = {
     useEffect(() =>{
       getProducts()
     },[])
+
+    useEffect(() =>{
+      atributeProducts()
+    },[teste])
     return (
     <>
     <Header/>

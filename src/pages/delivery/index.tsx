@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import Map from "../../components/Map";
 import { MapIcon } from "@heroicons/react/24/outline";
+import Api from "../../services/api";
 
 type ProductsType = {
   id: number,
@@ -23,7 +24,7 @@ export function Delivery() {
   const [map, setMap] = useState(Boolean)
   
   async function getProducts() {
-    const { data } = await axios.get('http://localhost:3000/products', {params:{companyCode: '435F57X'}});
+    const { data } = await Api.get('/products', {params:{companyCode: '435F57X'}});
     const completedOrders = data.filter((order: ProductsType) => order.status === "Concluído");
     setProducts(completedOrders);
   }

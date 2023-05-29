@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../../components/Alert";
+import Api from "../../services/api";
 export default function Register(){
     const [companyCode,setCompanyCode] = useState('')
     const [password,setPassword] = useState('')
@@ -21,7 +22,7 @@ export default function Register(){
           return;
         }
     
-        const { data } = await axios.get(`http://localhost:3000/company?companyCod=${companyCode}`);
+        const { data } = await Api.get(`/company?companyCod=${companyCode}`);
     
         if (data.length > 0) {
           const newEmployee = {

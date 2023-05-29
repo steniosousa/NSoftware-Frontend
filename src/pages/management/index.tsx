@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { eachDayOfInterval, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import Api from '../../services/api';
 
 type EmployeeProps = {
     id:number,
@@ -75,14 +76,14 @@ const Management: React.FC = () => {
         setDateEnd(endDate)
         try{
             const [employeesResponse, orderResponse,cliensResponse, stockResponse]: AxiosResponse[] = await Promise.all([
-                axios.get<EmployeeProps[]>('http://localhost:3000/employee', { params: { companyCode: '435F57X'} }),
-                axios.get('http://localhost:3000/products',{
+                Api.get<EmployeeProps[]>('/employee', { params: { companyCode: '435F57X'} }),
+                Api.get('/products',{
                     params:{
                         companyCode: '435F57X'
                     }
                 }),
-                axios.get('http://localhost:3000/clients',{params:{companyCod: "435F57X",}}),
-                axios.get('http://localhost:3000/stock',{params:{companyCode: '435F57X'}})
+                Api.get('/clients',{params:{companyCod: "435F57X",}}),
+                Api.get('/stock',{params:{companyCode: '435F57X'}})
             ])
             const registeredEmployees:EmployeeProps[] = employeesResponse.data
             const registeredOrder:ProductsProps[] = orderResponse.data
