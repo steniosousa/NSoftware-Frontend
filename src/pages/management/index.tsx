@@ -49,7 +49,7 @@ type grapicProps = {
 type stockProps = {
     id: number, product: string, unitPrice: number, quantity: number 
 }
-type Ingredient = {
+type Ingredients = {
     id: number;
     name: string;
     quantity: number;
@@ -59,7 +59,7 @@ type Ingredient = {
 type recipeProps = {
     id: number,
     name: string,
-    ingredients: Ingredient[]
+    ingredients: Ingredients[]
 }
 
 
@@ -196,43 +196,39 @@ const Management: React.FC = () => {
         setPreparing(preparingAll)
     }
 
-    async function expensesTotal(){
-       
-        
-        let wageTotal = 0
-        employees.forEach((wage) =>{
-            wageTotal += wage.value
-        })
-        stock.forEach((costStock) =>{
-            wageTotal += costStock.value
-        })
-
-        const wageFormated = wageTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-        setExpenses(wageFormated)
-        
-    }
+  
 
     async function calcularValorGastoPizza () {
-       
-
-        const recipeId = 1; // ID da receita da pizza
-        const recipes = recipe.find((recipe) => recipe.id === recipeId);
         let totalCost = 0;
-        
-        console.log(recipes)
-        if (recipes) {
-            recipes.ingredients.forEach(ingredient => {
-                const stockItem = stock.find((item) => item.product === ingredient.name);
-                if (stockItem) {
-                  const ingredientCost = stockItem.unitPrice * ingredient.quantity;
-                  totalCost += ingredientCost;
+        employees.forEach((wage) =>{
+            totalCost += wage.value
+        })
+       const allRecipes:recipeProps[] = []
+       
+        dateRange.map((recipeIdForOrder) =>{
+            const recipeId = recipeIdForOrder.recipeId; // ID da receita da pizza
+            const recipes:any = recipe.find((recipe) => recipe.id === recipeId);
+            allRecipes.push(recipes.ingredients)
+        })
+        if (allRecipes && allRecipes.length > 0 ) {
+            allRecipes.forEach(ingredient => {
+                if (Array.isArray(ingredient)) {
+                    ingredient.map((g) =>{
+                        const {name} = g
+                        const stockItem = stock.find((item) => item.product === name);
+                        if (stockItem) {
+                            const ingredientCost = stockItem.unitPrice * g.quantity;
+                          totalCost += ingredientCost;
+                        }
+                    })
+
                 }
             });
           
         }
-        
-        console.log('O custo total da pizza é:', totalCost);
+        const wageFormated = totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        setExpenses(wageFormated)
+
       }
       
 
@@ -246,7 +242,6 @@ useEffect(() =>{
 useEffect(() => {
     CalculateRangeDate();
     growthRateDays()
-    expensesTotal()
     preparing()
 }, [ order,dateEnd ]);
 

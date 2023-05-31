@@ -2,8 +2,8 @@
   "products": [
     {
       "id": 1,
-      "name": "Pizza de Frango",
-      "recipeId": 2,
+      "name": "Pizza Margherita",
+      "recipeId": 1,
       "status": "Concluído",
       "date": "Sun May 24 2023 00:03:40 ",
       "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
@@ -25,11 +25,11 @@
       }
     },
     {
-      "id": 67,
-      "name": "Pizza de Frango",
-      "status": "Concluído",
+      "id": 2,
+      "name": "Pizza Calabresa",
       "recipeId": 2,
-      "date": "Sat May 27 2023 23:08:09 ",
+      "status": "Concluído",
+      "date": "Sun May 24 2023 00:03:40 ",
       "imageSrc": "https://www.sabornamesa.com.br/media/k2/items/cache/ada34cd2101afafaba465aad112ee3c1_XL.jpg",
       "imageAlt": "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
       "observation": "Sem cebola",
@@ -47,103 +47,8 @@
         "HouseNumber": 531,
         "Obs": ""
       }
-    },
-    {
-      "id": 2,
-      "name": "Coxinha de franco com queijo",
-      "href": "#",
-      "status": "Concluído",
-      "recipeId": 2,
-      "date": "Sat May 27 2023 23:08:09 ",
-      "imageSrc": "https://www.comidaereceitas.com.br/wp-content/uploads/2021/05/coxinhaa_frango-780x493.jpg",
-      "imageAlt": "Olive drab green insulated bottle with flared screw lid and flat top.",
-      "observation": "Pouco queijo",
-      "amount": 1,
-      "value": 15,
-      "sizes": "M",
-      "companyCode": "",
-      "user": {
-        "userID": 1,
-        "name": "stenio",
-        "lat": "‑23.5500",
-        "lng": "‑46.6333",
-        "street": "Avenida José Arthur de Carvalho",
-        "HouseNumber": 531,
-        "Obs": ""
-      }
-    },
-    {
-      "id": 3,
-      "name": "Pastel Misto",
-      "href": "#",
-      "status": "Preparando",
-      "recipeId": 1,
-      "date": "Sat May 27 2023 23:08:09 ",
-      "imageSrc": "https://static.ifood-static.com.br/image/upload/t_high/pratos/a037092e-0d70-487c-84d6-e548522d465c/202003252009_teFk_i.jpg",
-      "imageAlt": "Person using a pen to cross a task off a productivity paper card.",
-      "amount": 5,
-      "value": 15,
-      "sizes": "M",
-      "companyCode": "",
-      "observation": "",
-      "user": {
-        "userID": 1,
-        "name": "stenio",
-        "lat": "‑23.5500",
-        "lng": "‑46.6333",
-        "street": "Avenida José Arthur de Carvalho",
-        "HouseNumber": 531,
-        "Obs": ""
-      }
-    },
-    {
-      "id": 4,
-      "name": "Pizza de Calabresa",
-      "href": "#",
-      "status": "Concluído",
-      "recipeId": 1,
-      "date": "Sat May 27 2023 23:08:09 ",
-      "imageSrc": "https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg",
-      "imageAlt": "Hand holding black machined steel mechanical pencil with brass tip and top.",
-      "amount": 4,
-      "value": 15,
-      "sizes": "P",
-      "companyCode": "435F57X",
-      "observation": "",
-      "user": {
-        "userID": 1,
-        "name": "stenio",
-        "lat": "‑23.5500",
-        "lng": "‑46.6333",
-        "street": "Avenida José Arthur de Carvalho",
-        "HouseNumber": 531,
-        "Obs": ""
-      }
-    },
-    {
-      "id": 4,
-      "name": "Pizza de Calabresa",
-      "href": "#",
-      "status": "Concluído",
-      "recipeId": 1,
-      "date": "Sat May 28 2023 23:08:09 ",
-      "imageSrc": "https://pilotandofogao.com.br/wp-content/uploads/2016/05/Pizza-De-Calabresa.jpg",
-      "imageAlt": "Hand holding black machined steel mechanical pencil with brass tip and top.",
-      "amount": 4,
-      "value": 15,
-      "sizes": "P",
-      "companyCode": "435F57X",
-      "observation": "",
-      "user": {
-        "userID": 1,
-        "name": "stenio",
-        "lat": "‑23.5500",
-        "lng": "‑46.6333",
-        "street": "Avenida José Arthur de Carvalho",
-        "HouseNumber": 531,
-        "Obs": ""
-      }
     }
+
   ],
   "company": [
     {
@@ -237,10 +142,10 @@
       "ingredients": [
         { "id": 1, "name": "Massa de pizza", "quantity": 1, "unit": "unidade" },
         { "id": 6, "name": "Molho de tomate", "quantity": 0.5, "unit": "xícara" },
-        { "id": 7, "name": "Queijo muçarela", "quantity": 150, "unit": "gramas" },
-        { "id": 8, "name": "Calabresa", "quantity": 100, "unit": "gramas" },
+        { "id": 7, "name": "Queijo muçarela", "quantity": 5, "unit": "gramas" },
+        { "id": 8, "name": "Calabresa", "quantity": 1, "unit": "gramas" },
         { "id": 9, "name": "Cebola", "quantity": 0.5, "unit": "unidade" },
-        { "id": 10, "name": "Azeitonas", "quantity": 10, "unit": "unidades" }
+        { "id": 10, "name": "Azeitonas", "quantity": 1, "unit": "unidades" }
       ]
     }
   ],
