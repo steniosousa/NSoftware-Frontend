@@ -227,7 +227,7 @@ const Management: React.FC = () => {
           
         }
         const wageFormated = totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        setExpenses(wageFormated)
+         setExpenses(wageFormated)
 
       }
       
