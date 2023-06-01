@@ -8,7 +8,10 @@ import { ptBR } from 'date-fns/locale';
 import Api from '../../services/api';
 
 
-  
+interface HorarioPicoResult {
+    horarioPico: string | null;
+    numOcorrencias: number;
+  }
 
 type EmployeeProps = {
     id:number,
@@ -62,6 +65,14 @@ type recipeProps = {
     ingredients: Ingredients[]
 }
 
+type rushHour = {
+    horarioPico: null;
+    numOcorrencias: number;
+} | {
+    horarioPico: string;
+    numOcorrencias: any;
+}
+
 
 const Management: React.FC = () => {
     const [dateStart, setDateStart] = useState<Date>(new Date())
@@ -71,11 +82,12 @@ const Management: React.FC = () => {
     const [invoicing, setInvoicing] = useState('R$ 0')
     const [clients, setClients] = useState([])
     const [dateRange, setDateRange] = useState<ProductsProps[]>([])
-    const [charDataBar, setCharDataBar] = useState({} as grapicProps)
     const [allPreparingOnder, setPreparing] = useState<ProductsProps[]>([])
     const [expenses, setExpenses] = useState('R$ 0')
     const [stock, setStock] = useState<stockProps[]>([])
     const [recipe, setRecipe] =useState<recipeProps[]>([])
+    const [charDataBar, setCharDataBar] = useState({} as grapicProps)
+    const [charDataLine, setCharDataLine] = useState({} as rushHour)
 
       async function getData(){
         const startDate = new Date();
@@ -206,7 +218,7 @@ const Management: React.FC = () => {
        const allRecipes:recipeProps[] = []
        
         dateRange.map((recipeIdForOrder) =>{
-            const recipeId = recipeIdForOrder.recipeId; // ID da receita da pizza
+            const recipeId = recipeIdForOrder.recipeId; 
             const recipes:any = recipe.find((recipe) => recipe.id === recipeId);
             allRecipes.push(recipes.ingredients)
         })
@@ -221,7 +233,6 @@ const Management: React.FC = () => {
                           totalCost += ingredientCost;
                         }
                     })
-
                 }
             });
           
@@ -230,6 +241,46 @@ const Management: React.FC = () => {
          setExpenses(wageFormated)
 
       }
+
+      async function getHourPique(){
+        const hours:any = []
+        dateRange.map((time: { date: Date }) =>{
+            const stockItem = hours.find((item: { date: Date }) => item.date === time.date);
+            if (!stockItem) {
+                hours.push(time.date)
+            }
+        })
+
+
+        
+       const rushHour =  encontrarHorarioPico(hours)
+      setCharDataLine(rushHour)
+
+      }
+     
+      
+        function encontrarHorarioPico(arrayDiasHorarios:string[][]):HorarioPicoResult {
+            if (arrayDiasHorarios.length === 0) {
+                return { horarioPico: null, numOcorrencias: 0 };
+              }
+            
+              const horariosContagem: Record<string, number> = {};
+            
+              
+                arrayDiasHorarios.forEach((horario) => {
+                  const date = new Date(horario as any) ;
+                  const horarioString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+                  horariosContagem[horarioString] = (horariosContagem[horarioString] || 0) + 1;
+                });
+        
+            
+              const horarioPico = Object.keys(horariosContagem).reduce((a, b) => {
+                return horariosContagem[a] > horariosContagem[b] ? a : b;
+              }, Object.keys(horariosContagem)[0]);
+            
+              return { horarioPico, numOcorrencias: horariosContagem[horarioPico] };
+        }
       
 
   
@@ -249,6 +300,7 @@ useEffect(() => {
 useEffect(() => {
     calculateBilling();
     calcularValorGastoPizza();
+    getHourPique()
     growthRateDays()
   }, [dateRange]);
 
@@ -380,7 +432,11 @@ useEffect(() => {
                             <h2 className="font-bold uppercase text-gray-600 text-center">Horario de pico</h2>
                         </div>
                         <div className="p-5">
-                        <Graphic panelType={'line'} datas={charDataBar}/>  
+                            {charDataLine.horarioPico == null?(
+                                 <h1 className='text-center'>Por favor, informar faixa de tempo</h1>
+                            ):(        
+                                <h1 className='text-center'>Horário: {charDataLine.horarioPico} com {charDataLine.numOcorrencias} pedidos</h1>
+                            )}
                         </div>
                     </div>
                 </div>
