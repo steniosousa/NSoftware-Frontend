@@ -106,15 +106,18 @@ type ProdutcsType = {
                     className="max-h-60 h-60 w-full object-cover object-center group-hover:opacity-75"
                     />
                 </div>
-                <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+                <div className=" mt-4 flex flex-row justify-around">
+                  <h3 className=" text-sm text-gray-700">{product.name}</h3>
+                  <p className=" text-sm font-medium text-gray-900 text-fuchsia-500">cod: {product.id}</p>
+                </div>
                 {product.status == 'Preparando'?(
-                    <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500">{product.status}</p>
-                ):product.status == 'Concluído'?(
-                    <p className="mt-1 text-sm font-medium text-gray-900 text-lime-400	 ">{product.status}</p>
+                  <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500 bg-green-700 text-white text-center rounded-md">{product.status}</p>
+                ):product.status == 'Novo'?(
+                  <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500 bg-red-700 text-white text-center rounded-md">{product.status}</p>
                 ):(
-                    <p className="mt-1 text-sm font-medium text-gray-900  text-blue-800 ">{product.status}</p>
-                   
-                )}
+                  <p className="mt-1 text-sm font-medium text-gray-900  text-blue-800 ">{product.status}</p>
+                  
+                  )}
                 
                 
               </div>
@@ -166,7 +169,10 @@ type ProdutcsType = {
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{productSelected.name}</h2>
-                      <h3 className="mt-4 text-sm text-gray-700">{productSelected.status}</h3>
+                      <div className="mt-4 flex flex-row justify-around">
+                        <h3 className=" text-sm text-gray-700">{productSelected.status}</h3>
+                        <h3 className=" text-sm text-gray-700">cod: {productSelected.id}</h3>
+                      </div>
                       <section aria-labelledby="information-heading" className="mt-2">
                         {/* Reviews */}
                         <div className="mt-6">

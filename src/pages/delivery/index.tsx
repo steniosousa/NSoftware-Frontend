@@ -64,13 +64,16 @@ export function Delivery() {
                       className="max-h-60 h-60 w-full object-cover object-center group-hover:opacity-75"
                     />
                   </div>
-                  <div className="flex flex-row justify-between">
+                  <div className="flex flex-col justify-around">
                     <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                    <button className={`mt-4 text-sm ${productSelected.some((selected) => selected.id === product.id) ? 'text-green-500' : 'text-gray-700'}`} onClick={() => handleSelected(product)}>
+                    <h3 className="mt-4 text-sm text-gray-700">cod: {product.id}</h3>
+                    <button className={`mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600  text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-sm  ${productSelected.some((selected) => selected.id === product.id) ? 'text-green-500' : 'text-gray-700'}`} onClick={() => handleSelected(product)}>
                       {productSelected.some((selected) => selected.id === product.id) ? 'Selecionado' : 'Selecionar'}
                     </button>
                   </div>
-                  <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500">{product.status}</p>
+                  {product.id == 2?(
+                    <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500 bg-green-700 text-white text-center rounded-md">Prioridade</p>
+                  ):(<></>)}
                 </div>
               ))}
             </>

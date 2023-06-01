@@ -83,6 +83,7 @@ const Management: React.FC = () => {
     const [clients, setClients] = useState([])
     const [dateRange, setDateRange] = useState<ProductsProps[]>([])
     const [allPreparingOnder, setPreparing] = useState<ProductsProps[]>([])
+    const [allDelivery, setAllDelivery] = useState<ProductsProps[]>([])
     const [expenses, setExpenses] = useState('R$ 0')
     const [stock, setStock] = useState<stockProps[]>([])
     const [recipe, setRecipe] =useState<recipeProps[]>([])
@@ -175,7 +176,6 @@ const Management: React.FC = () => {
               },
             ],
           }
-
         setCharDataBar(chartData)
       }
 
@@ -186,7 +186,6 @@ const Management: React.FC = () => {
             totalBilling +=money.value
         })
         const totalBillingAplication = totalBilling.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
         setInvoicing(totalBillingAplication)
     }
     
@@ -197,6 +196,7 @@ const Management: React.FC = () => {
 
     function preparing(){
         const preparingAll:ProductsProps[] = []
+        const deliveryAll:ProductsProps[] = []
         order.forEach((getQuantity) =>{
             if(getQuantity.status == "Preparando"){
                 const itemExists = preparingAll.some((item) => item.id === getQuantity.id);
@@ -205,11 +205,19 @@ const Management: React.FC = () => {
                }
             }
         })
+
+        order.forEach((getQuantity) =>{
+            if(getQuantity.status == "A caminho"){
+                const itemExists = deliveryAll.some((item) => item.id === getQuantity.id);
+               if(!itemExists){
+                preparingAll.push(getQuantity)
+               }
+            }
+        })
+
+        setAllDelivery(deliveryAll)
         setPreparing(preparingAll)
     }
-
-  
-
     async function calcularValorGastoPizza () {
         let totalCost = 0;
         employees.forEach((wage) =>{
@@ -238,8 +246,7 @@ const Management: React.FC = () => {
           
         }
         const wageFormated = totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-         setExpenses(wageFormated)
-
+        setExpenses(wageFormated)
       }
 
       async function getHourPique(){
@@ -250,23 +257,15 @@ const Management: React.FC = () => {
                 hours.push(time.date)
             }
         })
-
-
-        
-       const rushHour =  encontrarHorarioPico(hours)
-      setCharDataLine(rushHour)
-
+        const rushHour =  encontrarHorarioPico(hours)
+        setCharDataLine(rushHour)
       }
-     
-      
         function encontrarHorarioPico(arrayDiasHorarios:string[][]):HorarioPicoResult {
             if (arrayDiasHorarios.length === 0) {
                 return { horarioPico: null, numOcorrencias: 0 };
               }
             
               const horariosContagem: Record<string, number> = {};
-            
-              
                 arrayDiasHorarios.forEach((horario) => {
                   const date = new Date(horario as any) ;
                   const horarioString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -407,7 +406,7 @@ useEffect(() => {
                                 </div>
                                 <div className="flex-1 text-right md:text-center">
                                     <h2 className="font-bold uppercase text-gray-600">A caminho</h2>
-                                    <p className="font-bold text-3xl">3 <span className="text-red-500"><i className="fas fa-caret-up"></i></span></p>
+                                    <p className="font-bold text-3xl">{allDelivery.length}<span className="text-red-500"><i className="fas fa-caret-up"></i></span></p>
                                 </div>
                             </div>
                         </div>
