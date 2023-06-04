@@ -1,69 +1,68 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../../components/Alert";
 import Api from "../../services/api";
 export default function Register(){
-    const [companyCode,setCompanyCode] = useState('')
+    const [codeEmployee,setCodeEmployee] = useState<number>()
     const [password,setPassword] = useState('')
     const [name, setName] = useState('');
     const [email, setEmail] = useState('')
     const [alert, setAlert] = useState(false);
     const [alertType, setAlertType] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
+
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = parseInt(event.target.value);
+      setCodeEmployee(value);
+    };
     
     async function handleRegister(event:any) {
         event.preventDefault();
-    
-        if (companyCode === '' || password === '' || name === '' || email === '') {
+        if ( password === '' || name === '' || email === '') {
           setAlert(true);
           setAlertType('error');
           setAlertMessage('Preencha todos os campos');
           return;
         }
-    
-        const { data } = await Api.get(`/company?companyCod=${companyCode}`);
-    
-        if (data.length > 0) {
-          const newEmployee = {
-            id: Math.random(),
-            companyCode,
-            password,
-            name,
-            email,
-            role:""
-          };
-    
-          await axios.post('http://localhost:3000/employee', newEmployee);
-          setAlert(true);
-          setAlertType('success');
-          setAlertMessage('Cadastro realizado!');
-          setAlert(false);
-        } else {
-          setAlert(true);
-          setAlertType('error');
-          setAlertMessage('Código não reconhecido!');
-          setAlert(false);
+        const newEmployee = {
+          name,
+          email,
+          password,
+          codeEmployee
+        };
+
+        try{
+          await Api.post('account/',newEmployee);
+          setAlertType("Success")
+          setAlertMessage("Usuário criado com sucesso")
+          handleOpenModal()
+        }catch(error:any) {
+          const responseReturn = error.response?.data?.message;
+          setAlertType("error")
+          setAlertMessage(responseReturn)
+          handleOpenModal()
         }
-    
-        setCompanyCode('');
-        setPassword('');
-        setName('');
-        setEmail('');
       }
+      const handleOpenModal = () => {
+        setAlert(true);
+      };
+      const handleCloseModal = () => {
+        setAlert(false);
+      };
 
         
         
     return(
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        {alert == true && <Alert type={alertType} message={alertMessage} />}
+        {alert && <Alert type={alertType} message={alertMessage} onClose={handleCloseModal}/>}
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* <img
+          <img
             className="mx-auto h-10 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company"
-          /> */}
+          />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
             
           </h2>
@@ -77,11 +76,10 @@ export default function Register(){
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  type="text"
-                  value={companyCode}
-                  onChange={(event) =>setCompanyCode(event.target.value) }
-                  autoComplete="email"
+                  type="number"
+                  value={codeEmployee}
+                  inputMode="numeric"
+                  onChange={handleChange}
                   required
                   className=" pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
