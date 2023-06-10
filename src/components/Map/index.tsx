@@ -1,6 +1,15 @@
 import { useEffect, useRef } from 'react';
+type CoordsStore = {
+  lat: number;
+  lng: number;
+};
 
-export default function Map() {
+type MapProps = {
+  cordsSore: CoordsStore;
+  coordsOrders: CoordsStore[];
+};
+
+export default function Map({cordsSore,coordsOrders}:MapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,11 +25,9 @@ export default function Map() {
           map: map,
         });
 
-        const start = { lat: -23.5505, lng: -46.6333 };
-        const end = { lat: -27.2423, lng: -50.2189 };
-        const waypoints = [
-          { location: { lat: -22.9068, lng: -43.1729 } },
-        ];
+        const start = cordsSore;
+        const end =  cordsSore;
+        const waypoints = coordsOrders;
 
         const request = {
           origin: start,
@@ -43,12 +50,12 @@ export default function Map() {
       loadMap();
     } else {
       const script = document.createElement('script');
-      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOiwdX3bp-LcRn7vexF2nr4erxFG7WYTM"
-      // script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDqdW6bK270KIlO7mBee544JijS5CUXWg8&sensor=true&libraries=places';
+      // script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOiwdX3bp-LcRn7vexF2nr4erxFG7WYTM"
+      script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDqdW6bK270KIlO7mBee544JijS5CUXWg8&sensor=true&libraries=places';
       script.onload = loadMap;
       document.body.appendChild(script);
     }
-  }, []);
+  }, [cordsSore,coordsOrders]);
 
   return (
     <div style={{ height: '100vh', width: '100%', background: 'white', position: 'fixed', top: 0, left: 0, overflow: '' }}>

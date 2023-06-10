@@ -37,7 +37,7 @@ export default function Login(){
           navigate('/home')
         }
         catch(error) {
-          console.log(jsonSend)
+          
           setAlertType('error')
           setAlertMessage('Email ou senha incorretos')
           handleOpenModal()

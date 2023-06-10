@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Map from "../../components/Map";
 import { MapIcon } from "@heroicons/react/24/outline";
 import Api from "../../services/api";
+import { AxiosResponse } from "axios";
 
 type ProductsType = {
   id: number,
@@ -18,26 +19,50 @@ type ProductsType = {
   priority: boolean
 }
 
+type coordsProps = {
+  lat:number,
+  lng:number
+}
+
+
 export function Delivery() {
   const [datas, setDatas] = useState()
   const [products, setOrders] = useState<ProductsType[]>([]);
   const [productSelected, setProductSelected] = useState<ProductsType[]>([]);
+  const [coords, setCoords] = useState<coordsProps>({lat:0,lng:0})
+  const [coordsOrders, setCoordsOrders] = useState<coordsProps[]> ([])
   const [map, setMap] = useState(Boolean)
 
   async function getProducts() {
     const data = localStorage.getItem("data");
     if (!data) return
     const parsedData = JSON.parse(data);
-
     setDatas(parsedData)
-    const objSend = { "companyId": parsedData.statusCompany.companyID, "page": 1 }
-    try {
-      const { data } = await Api.get('order/', {
-        params: objSend
-      })
-      const completedOrders = data.filter((order: ProductsType) => order.status === "Concluído");
-      setOrders(completedOrders)
 
+    const objSendOrder = { "companyId": parsedData.statusCompany.companyID, "page": 1 }
+    const objSenderCompany = {"id": parsedData.statusCompany.companyID}
+    try {
+      const [responseOrders, responseLocationStore]:AxiosResponse[] = await Promise.all([
+       Api.get('order/', {
+          params: objSendOrder
+        }),
+        Api.get('company',{
+          params:objSenderCompany
+        })
+      ])
+      const responseOrdersData = responseOrders.data
+      const coordsStore = {lat: parseFloat(responseLocationStore.data.lat), lng: parseFloat(responseLocationStore.data.lng) }
+
+      const completedOrders = responseOrdersData.filter((order: ProductsType) => order.status === "Concluído");
+      setOrders(completedOrders)
+      setCoords(coordsStore)
+
+      completedOrders.forEach((cords:{lat:string,lng:string}) => {
+        const latInt = parseFloat(cords.lat)
+        const lngInt = parseFloat(cords.lng)
+        const objCoords:any = {location:{lat:latInt, lng:lngInt}} 
+        setCoordsOrders([...coordsOrders,objCoords])
+      });
     } catch (error) { console.log(error) }
   }
 
@@ -56,11 +81,11 @@ export function Delivery() {
       setProductSelected(newSelected)
       return
     }
+    console.log(coordsOrders)
 
   }
 
   function handleShowMap() {
-    console.log(products)
     setMap(!map)
   }
 
@@ -109,7 +134,7 @@ export function Delivery() {
               ) : (<></>)}
             </div>
           ))}
-          {productSelected.length >= 3 ? (
+          {productSelected.length >= 2 ? (
             <button className="fixed bottom-4 right-4 z-10 " onClick={handleShowMap}>
               <div className="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-full shadow-lg">
                 <MapIcon className="h-6 w-6 text-white-600" />
@@ -117,7 +142,8 @@ export function Delivery() {
             </button>
           ) : (<></>)}
           {map == true ? (
-            <Map />
+          
+            <Map cordsSore={coords} coordsOrders={coordsOrders}/>
           ) : (<></>)}
         </div>
       </div>
