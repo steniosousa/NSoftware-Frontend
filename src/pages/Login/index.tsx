@@ -1,18 +1,60 @@
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import Alert from "../../components/Alert";
+import Api from "../../services/api";
+
+
+type StatusCompany = {
+  statusCompany: string;
+  roleUser: string;
+  codeEmployee: number ;
+  companyID: null | string;
+};
+
+type DatasResponseLoginProps = {
+  accessToken: string;
+  statusCompany: StatusCompany;
+};
+
 export default function Login(){
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const [alertType, setAlertType] = useState('')
+    const [alertMessage, setAlertMessage] = useState('')
     const navigate = useNavigate();
-    function handleLogin(event:any){
+    const [alert,setAlert] = useState(false)
+
+    async function handleLogin(event:any){
         event.preventDefault()
-        console.log(email,password)
-        navigate('/home')
-    }
+        const jsonSend = {
+          email,
+          password
+        }
+        try{
+          const {data} = await Api.post('auth/',jsonSend) 
+          const saveInlocalStorage=  JSON.stringify(data)
+          localStorage.setItem("data",saveInlocalStorage);
+          navigate('/home')
+        }
+        catch(error) {
+          console.log(jsonSend)
+          setAlertType('error')
+          setAlertMessage('Email ou senha incorretos')
+          handleOpenModal()
+        }
+      }
+      const handleOpenModal = () => {
+        setAlert(true);
+      };
+      const handleCloseModal = () => {
+        setAlert(false);
+      };
 
 
     return(
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+           {alert && <Alert type={alertType} message={alertMessage} onClose={handleCloseModal}/>}
+
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"

@@ -15,6 +15,7 @@
     "react-error-overlay": "6.0.9"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.1",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@types/chart.js": "^2.9.37",
