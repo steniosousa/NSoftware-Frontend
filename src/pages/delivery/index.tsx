@@ -25,6 +25,7 @@ type adressProps = {
 
 }
 type accountPros = {
+  contact: string
   name: string
   address: adressProps
 }
@@ -227,6 +228,7 @@ export function Delivery() {
                             <h2 className="text-2xl font-bold mb-4">Localização</h2>
                             <p className="mb-2">Nome: {productSelectedSeeInfos?.account.name} </p>
                             <p className="mb-2">Endereço: {productSelectedSeeInfos?.account.address.houseNumber}  {productSelectedSeeInfos?.account.address.street}, {productSelectedSeeInfos?.account.address.district}</p>
+                            <p className="mb-2">Contato: {productSelectedSeeInfos?.account.contact || "Sem contato"}</p>
                             <p className="mb-2">Obs: {productSelectedSeeInfos?.account.address.obs || "Sem observação"}</p>
                             {productSelectedSeeInfos ? (
                               <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500 bg-green-700 text-white text-center rounded-md">Prioridade</p>
