@@ -11,48 +11,49 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-type ProdutcsType = {
-  id: number,
+type datasOrder = {
   name: string,
-  href: string,
-  status: string,
   image: string,
-  imageAlt: string,
-  amount: number,
-  size: string,
-  observation: string
-  priority: boolean
+  Sizes:[]
 
+}
+type ProdutcsType = {
+  sizeId:number,
+  amount: number,
+  status: string,
+  id: number,
+  href: string,
+  size: string,
+  obs: string
+  priority: boolean,
+  date:Date,
+  Products:datasOrder
 }
 type StatusCompany = {
   statusCompany: string;
   roleUser: string;
   codeEmployee: number;
-  companyID: null | string;
+  companyId: null | number;
 };
 
 type DatasResponseLoginProps = {
   accessToken: string;
   statusCompany: StatusCompany;
 };
+
+type sizes = {
+  id:number;
+  size:string;
+}
 export default function Order() {
   const [datas, setDatas] = useState<DatasResponseLoginProps>()
   const [open, setOpen] = useState(false)
   const [startFilter, setStartFilter] = useState(false)
   const [orders, setOrders] = useState<ProdutcsType[]>([])
   const [productSelected, setProductSelected] = useState<ProdutcsType>()
-  const sizes = [
-    { name: 'P', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'G', inStock: true },
-  ]
+const [sizes, setSizes] = useState<sizes[]>([])
 
-  sizes.forEach(size => {
-    if (productSelected == undefined) return
-    if (size.name === productSelected.size) {
-      size.inStock = false;
-    }
-  });
+  
 
   async function getProducts() {
     const data = localStorage.getItem("data");
@@ -60,7 +61,7 @@ export default function Order() {
     const parsedData = JSON.parse(data);
 
     setDatas(parsedData)
-    const objSend = { "companyId": parsedData.statusCompany.companyID, "page": 1 }
+    const objSend = { "companyId": parsedData.statusCompany.Company.id, "page": 1 }
     try {
       const { data } = await Api.get('order/', {
         params: objSend
@@ -80,17 +81,24 @@ export default function Order() {
   }, [startFilter])
 
   function showProduct(product: ProdutcsType) {
+    
     setProductSelected(product)
     setOpen(true)
   }
-
+  
+  function teste (){
+    for(let order = 0; order < orders.length;order++){
+      setSizes( orders[order].Products.Sizes)
+    }
+  }
 
 
   async function takeOrder() {
+
     if (productSelected == undefined) return
     if (!datas) return
     const objPrepar = {
-      "companyId": datas.statusCompany.companyID,
+      "companyId": datas.statusCompany.companyId,
       "id": productSelected.id,
       "status": "Preparando"
     }
@@ -103,7 +111,7 @@ export default function Order() {
     if (productSelected == undefined) return
     if (!datas) return
     const objSender = {
-      "companyId": datas.statusCompany.companyID,
+      "companyId": datas.statusCompany.companyId,
       "id": productSelected.id,
       "status": "Concluído"
     }
@@ -111,6 +119,9 @@ export default function Order() {
     getProducts();
     setOpen(false)
   }
+
+  useEffect(() =>{teste()},[productSelected])
+
   useEffect(() => {
     getProducts()
   }, [])
@@ -139,13 +150,13 @@ export default function Order() {
               <div key={product.id} className="group" onClick={() => showProduct(product)} >
                 <div className="aspect-h-1 aspect-w-1  overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
-                    src={product.image}
-                    alt={product.imageAlt}
+                    src={product.Products.image}
+                    alt="Imagem do produto"
                     className="max-h-60 h-60 w-full object-cover object-center group-hover:opacity-75"
                   />
                 </div>
                 <div className=" mt-4 flex flex-row justify-around">
-                  <h3 className=" text-sm text-gray-700">{product.name}</h3>
+                  <h3 className=" text-sm text-gray-700 w-40">{product.Products.name.toUpperCase()}</h3>
                   <p className=" text-sm font-medium text-gray-900 text-fuchsia-500">cod: {product.id}</p>
                 </div>
                 {product.status == 'Preparando' ? (
@@ -204,10 +215,10 @@ export default function Order() {
 
                       <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                         <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                          <img src={productSelected.image} alt={productSelected.imageAlt} className="object-cover object-center" />
+                          <img src={productSelected.Products.image} alt="Imagem do produto" className="object-cover object-center" />
                         </div>
                         <div className="sm:col-span-8 lg:col-span-7">
-                          <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{productSelected.name}</h2>
+                          <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{productSelected.Products.name.toUpperCase()}</h2>
                           <div className="mt-4 flex flex-row justify-around">
                             <h3 className=" text-sm text-gray-700">{productSelected.status}</h3>
                             <h3 className=" text-sm text-gray-700">cod: {productSelected.id}</h3>
@@ -237,7 +248,7 @@ export default function Order() {
                             <div>
                               <h4 className="text-sm py-2 font-medium text-gray-900">Observação:</h4>
                               <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                {productSelected.observation}
+                                {productSelected.obs}
                               </p>
                             </div>
 
@@ -248,55 +259,26 @@ export default function Order() {
 
                               </div>
 
-                              <RadioGroup className="mt-4">
+                              <RadioGroup className="mt-4 bac">
                                 <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                                 <div className="grid grid-cols-4 gap-4">
                                   {sizes.map((size) => (
                                     <RadioGroup.Option
-                                      key={size.name}
+                                      key={Math.random()}
                                       value={size}
-                                      disabled={!size.inStock}
-                                      className={({ active }) =>
-                                        classNames(
-                                          size.inStock
-                                            ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                                            : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                                          active ? 'ring-2 ring-indigo-500' : '',
-                                          'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
-                                        )
-                                      }
+                                      className={ classNames(
+                                        size.id == productSelected.sizeId?'bg-green-700 text-white': '',
+                                        'group relative flex items-center justify-center rounded-md  border py-3 px-4 text-sm font-medium uppercase  '
+                                  )}
                                     >
-                                      {({ active, checked }) => (
-                                        <>
-                                          <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
-                                          {size.inStock ? (
-                                            <span
-                                              className={classNames(
-                                                active ? 'border' : 'border-2',
-                                                checked ? 'border-indigo-500' : 'border-transparent',
-                                                'pointer-events-none absolute -inset-px rounded-md'
-                                              )}
-                                              aria-hidden="false"
-                                            />
-                                          ) : (
-                                            <span
-                                              aria-hidden="false"
-                                              className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                            >
-                                              <svg
-                                                className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                                viewBox="0 0 100 100"
-                                                preserveAspectRatio="none"
-                                                stroke="currentColor"
-                                              >
-                                                <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
-                                              </svg>
-                                            </span>
-                                          )}
-                                        </>
-                                      )}
+                                      <span >
+                                        <RadioGroup.Label as="span" >{size.size}</RadioGroup.Label>
+                                      </span>
+
+                                  
                                     </RadioGroup.Option>
                                   ))}
+                                    
                                 </div>
                               </RadioGroup>
                             </div>
