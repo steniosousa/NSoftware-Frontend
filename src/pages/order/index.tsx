@@ -63,7 +63,7 @@ const [sizes, setSizes] = useState<sizes[]>([])
     setDatas(parsedData)
     const objSend = { "companyId": parsedData.statusCompany.Company.id, "page": 1 }
     try {
-      const { data } = await Api.get('order/', {
+      const { data } = await Api.get('order', {
         params: objSend
       })
       setOrders(data)
@@ -72,7 +72,7 @@ const [sizes, setSizes] = useState<sizes[]>([])
   }
 
   function filterOrders() {
-    const ordersFilted = orders.filter((order) => order.status != "Concluído")
+    const ordersFilted = orders.filter((order) => order.status != "Aguardando motoboy")
     setOrders(ordersFilted)
   }
 
@@ -113,7 +113,7 @@ const [sizes, setSizes] = useState<sizes[]>([])
     const objSender = {
       "companyId": datas.statusCompany.companyId,
       "id": productSelected.id,
-      "status": "Concluído"
+      "status": "Aguardando motoboy"
     }
     await Api.patch('order/', objSender);
     getProducts();

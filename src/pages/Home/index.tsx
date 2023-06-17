@@ -13,7 +13,6 @@ export default function Home() {
       const data = localStorage.getItem("data");
       if (data) {
         const parsedData = JSON.parse(data);
-        console.log(data)
         setRole('gerência')
       }
     }

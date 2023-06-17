@@ -4,27 +4,32 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import user from '../../assets/user.png'
 import { useNavigate } from 'react-router-dom';
 
-type navigations ={
+type navigations = {
   name: string,
   path: string
 }
 export default function Header() {
   const navigate = useNavigate();
 
-    const navigation: navigations[] = [
-        { name: 'Dashboard', path: '/home'},
-        { name: 'Pedidos', path: '/order' },
-        { name: 'Delivery', path: '/delivery' },
-        { name: 'Gerência', path: '/management'},  
-    ]
-        
-    function classNames(...classes: string[]) {
-        return classes.filter(Boolean).join(' ')
-    }
-    
-    function handleNavigete(navigation:navigations){
-      navigate(navigation.path)
-    }
+  const navigation: navigations[] = [
+    { name: 'Dashboard', path: '/home' },
+    { name: 'Pedidos', path: '/order' },
+    { name: 'Delivery', path: '/delivery' },
+    { name: 'Gerência', path: '/management' },
+  ]
+
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+  }
+
+  function handleNavigete(navigation: navigations) {
+    navigate(navigation.path)
+  }
+
+  function handleSingOut() {
+    localStorage.clear()
+    navigate('/')
+  }
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -47,7 +52,7 @@ export default function Header() {
                   <img
                     className="block h-8 w-auto lg:hidden"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    onClick={() =>navigate('/home')}
+                    onClick={() => navigate('/home')}
                     alt="Your Company"
                   />
                   <img
@@ -63,7 +68,7 @@ export default function Header() {
                         key={item.name}
                         onClick={() => handleNavigete(item)}
                         className={'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer'}
-                       
+
                       >
                         {item.name}
                       </a>
@@ -89,7 +94,7 @@ export default function Header() {
                         className="h-8 w-8 rounded-full color-white"
                         src={user}
                         alt=""
-                       
+
                       />
                     </Menu.Button>
                   </div>
@@ -109,7 +114,7 @@ export default function Header() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Your Profile
+                            Perfil
                           </a>
                         )}
                       </Menu.Item>
@@ -119,17 +124,17 @@ export default function Header() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Settings
+                            Configurações
                           </a>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={handleSingOut}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
+                            Sair
                           </a>
                         )}
                       </Menu.Item>

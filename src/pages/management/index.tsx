@@ -302,7 +302,6 @@ const Management: React.FC = () => {
     }
 
     const handleRoleChange = async (event: any, user: EmployeeProps) => {
-        console.log(user)
         const roleId = parseInt(event)
         const datasSend = {
             email: user.email,
@@ -322,7 +321,6 @@ const Management: React.FC = () => {
             window.location.reload()
 
         } catch {
-            console.log('oi')
         }
 
     }

@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 type CoordsStore = {
   lat: number;
   lng: number;
@@ -9,8 +10,32 @@ type MapProps = {
   coordsOrders: CoordsStore[];
 };
 
-export default function Map({cordsSore,coordsOrders}:MapProps) {
+const Map = ({ cordsSore, coordsOrders }: MapProps) => {
+  const [coordsMotoboy, setCoordsMotoboy] = useState<CoordsStore>({ lat: 0, lng: 0 });
   const mapRef = useRef<HTMLDivElement>(null);
+
+  const getPositionMotoboy = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoordsMotoboy({ lat: position.coords.latitude, lng: position.coords.longitude });
+        },
+        (error) => {
+          console.log('Erro ao obter localização:', error);
+        }
+      );
+    } else {
+      console.log('Geolocalização não suportada pelo navegador');
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getPositionMotoboy();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const loadMap = () => {
@@ -25,18 +50,18 @@ export default function Map({cordsSore,coordsOrders}:MapProps) {
           map: map,
         });
 
-        const start = cordsSore;
-        const end =  cordsSore;
+        const start = coordsMotoboy;
+        const end = cordsSore;
         const waypoints = coordsOrders;
 
         const request = {
           origin: start,
           destination: end,
           waypoints: waypoints,
-          travelMode: 'DRIVING'
+          travelMode: 'DRIVING',
         };
 
-        directionsService.route(request as any, (response, status) => {
+        directionsService.route(request, (response, status) => {
           if (status === 'OK') {
             directionsRenderer.setDirections(response);
           } else {
@@ -50,16 +75,17 @@ export default function Map({cordsSore,coordsOrders}:MapProps) {
       loadMap();
     } else {
       const script = document.createElement('script');
-      // script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOiwdX3bp-LcRn7vexF2nr4erxFG7WYTM"
       script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDqdW6bK270KIlO7mBee544JijS5CUXWg8&sensor=true&libraries=places';
       script.onload = loadMap;
       document.body.appendChild(script);
     }
-  }, [cordsSore,coordsOrders]);
+  }, [coordsMotoboy, cordsSore, coordsOrders]);
 
   return (
     <div style={{ height: '100vh', width: '100%', background: 'white', position: 'fixed', top: 0, left: 0, overflow: '' }}>
       <div ref={mapRef} style={{ height: '100vh', width: '100%', position: 'absolute', top: 0, left: 0, overflow: '' }}></div>
     </div>
   );
-}
+};
+
+export default Map;

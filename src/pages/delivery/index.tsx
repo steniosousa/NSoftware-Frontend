@@ -78,19 +78,20 @@ export function Delivery() {
       ])
       const responseOrdersData = responseOrders.data
       const coordsStore = { lat: parseFloat(responseLocationStore.data.lat), lng: parseFloat(responseLocationStore.data.lng) }
-      const completedOrders = responseOrdersData.filter((order: ProdutcsType) => order.status === "Concluído");
+      const completedOrders = responseOrdersData.filter((order: ProdutcsType) => order.status === "Aguardando motoboy");
       setOrders(completedOrders)
-      setCoords(coordsStore)
+      const cordsSore = {lat:-3.8305792,lng:-38.4562797}
 
+      setCoords(cordsSore)
+      console.log(coordsStore)
       completedOrders.forEach((cords: { lat: string, lng: string }) => {
-        const latInt = parseFloat(cords.lat)
-        const lngInt = parseFloat(cords.lng)
+        const latInt = parseFloat(cords.account.address.lat)
+        const lngInt = parseFloat(cords.account.address.lng)
         const objCoords: any = { location: { lat: latInt, lng: lngInt } }
         setCoordsOrders([...coordsOrders, objCoords])
       });
     } catch (error) { console.log(error) }
   }
-
 
 
 
@@ -118,7 +119,6 @@ export function Delivery() {
 
     setOpen(true)
     setProductSelectedSeeInfos(select)
-    console.log(productSelectedSeeInfos)
   }
 
   useEffect(() => {
@@ -230,7 +230,7 @@ export function Delivery() {
                             <p className="mb-2">Endereço: {productSelectedSeeInfos?.account.address.houseNumber}  {productSelectedSeeInfos?.account.address.street}, {productSelectedSeeInfos?.account.address.district}</p>
                             <p className="mb-2">Contato: {productSelectedSeeInfos?.account.contact || "Sem contato"}</p>
                             <p className="mb-2">Obs: {productSelectedSeeInfos?.account.address.obs || "Sem observação"}</p>
-                            {productSelectedSeeInfos ? (
+                            {productSelectedSeeInfos?.priority ? (
                               <p className="mt-1 text-sm font-medium text-gray-900 text-fuchsia-500 bg-green-700 text-white text-center rounded-md">Prioridade</p>
                             ) : (<></>)}
                           </div>
